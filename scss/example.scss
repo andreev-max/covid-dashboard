@@ -1,0 +1,35 @@
+// файл обнуляющих стилей от фрилансера по жизни
+@import "nullstyle.scss";
+
+//переменные 
+$color_1: red;
+
+
+//шаблоны вставляются через extend
+%tplborder {
+   border-bottom: 5px dashed red;
+}
+
+//миксины вставляются через инклуды
+@mixin fontz($f) {
+   font-size: $f;
+}
+.block {
+   height: 300px;
+   width: 300px/960px * 100%;
+   font-size: 20px;
+   line-height: 15px;
+   background-color: rosybrown;
+
+
+   span {
+      color: $color_1;
+   }
+}
+
+.lick {
+   @include fontz(100px);
+   @extend %tplborder;
+}
+
+

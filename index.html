@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+   <meta charset="UTF-8">
+   <meta name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no">
+   <meta http-equiv="X-UA-Compatible" content="ie-edge">
+   <title>train-english</title>
+   <link rel="stylesheet" href="css/category.css">
+   <link rel="icon" href="favicon.ico" type="image/x-icon">
+   <script src="js/home.js"></script>
+   <script src="js/animals.js"></script>
+   <script src="js/berries.js"></script>
+   <script src="js/human.js"></script>
+   <script src="js/clothes.js"></script>
+   <script src="js/emotions.js"></script>
+   <script src="js/fruits.js"></script>
+   <script src="js/sports.js"></script>
+   <script src="js/vegetables.js"></script>
+
+
+
+
+
+</head>
+
+<body>
+   <header class="header">
+      <div class="header-wrapper">
+         <div class="header__burger">
+            <span class="header-burger-line"></span>
+         </div>
+         <div class="button-switch">
+            <input type="checkbox" id="switch-orange" class="switch" />
+            <label for="switch-orange" class="lbl-off">Train</label>
+            <label for="switch-orange" class="lbl-on">Play</label>
+         </div>
+      </div>
+   </header>
+
+<div class="overlay"></div>
+
+
+
+
+   <nav class="header-menu">
+      <ul class="header-list">
+         <li onclick="onNavigate('/index.html'); return false;" class="header-item">
+            <img src="/assets/icons/fruits.png" alt="apple" class="icon">
+            <a href="#" class="header-link header-link-main">Main page</a>
+         </li>
+         <li onclick="onNavigate('/animals'); return false;" class="header-item">
+            <img src="/assets/icons/animals.png" alt="apple" class="icon">
+            <a href="#" class="header-link header-link-category">Animals</a>
+         </li>
+         <li onclick="onNavigate('/berries'); return false;" class="header-item">
+            <img src="/assets/icons/berries.png" alt="apple" class="icon">
+            <a href="#" class="header-link header-link-category">Berries</a>
+         </li>
+         <li onclick="onNavigate('/human'); return false;" class="header-item">
+            <img src="/assets/icons/human.png" alt="apple" class="icon">
+            <a href="#" class="header-link header-link-category">Human</a>
+         </li>
+         <li onclick="onNavigate('/clothes'); return false;" class="header-item">
+            <img src="/assets/icons/clothes.png" alt="apple" class="icon">
+            <a href="#" class="header-link header-link-category">Clothes</a>
+         </li>
+         <li onclick="onNavigate('/emotions'); return false;" class="header-item">
+            <img src="/assets/icons/emotions.png" alt="apple" class="icon">
+            <a href="#" class="header-link header-link-category">Emotions</a>
+         </li>
+         <li onclick="onNavigate('/fruits'); return false;" class="header-item">
+            <img src="/assets/icons/fruits.png" alt="apple" class="icon">
+            <a href="#" class="header-link header-link-category">Fruits</a>
+         </li>
+         <li onclick="onNavigate('/sports'); return false;" class="header-item">
+            <img src="/assets/icons/sports.png" alt="apple" class="icon">
+            <a href="#" class="header-link header-link-category">Sports</a>
+         </li>
+         <li onclick="onNavigate('/vegetables'); return false;" class="header-item">
+            <img src="/assets/icons/vegetables.png" alt="apple" class="icon">
+            <a href="#" class="header-link header-link-category">Vegetables</a>
+         </li>
+      </ul>
+   </nav>
+<div class="play-menu">
+   <div class="play-menu-stars"></div>
+<button class="button-start-game">Start Game</button>
+</div>
+
+
+   <section class="container">
+      <div class="card" style="cursor: pointer; background-color: #ffd86f"
+         onclick="onNavigate('/animals'); return false;">
+         <img src="/assets/img/category/Animals.jpg" class="image">
+         <span class="caption">Animals</span>
+      </div>
+      <div class="card" style="cursor: pointer; background-color: #ffd86f"
+         onclick="onNavigate('/berries'); return false;">
+         <img src="/assets/img/category/Berries.jpg" class="image">
+         <span class="caption">Berries</span>
+      </div>
+      <div class="card" style="cursor: pointer; background-color: #ffd86f"
+         onclick="onNavigate('/body'); return false;">
+         <img src="/assets/img/category/Body.jpg" class="image">
+         <span class="caption">Body</span>
+      </div>
+      <div class="card" style="cursor: pointer; background-color: #ffd86f"
+         onclick="onNavigate('/clothes'); return false;">
+         <img src="/assets/img/category/Clothes.jpg" class="image">
+         <span class="caption">Clothes</span>
+      </div>
+      <div class="card" style="cursor: pointer; background-color: #ffd86f"
+         onclick="onNavigate('/emotions'); return false;">
+         <img src="/assets/img/category/Emotions.jpg" class="image">
+         <span class="caption">Emotions</span>
+      </div>
+      <div class="card" style="cursor: pointer; background-color: #ffd86f"
+         onclick="onNavigate('/fruits'); return false;">
+         <img src="/assets/img/category/Fruits.jpg" class="image">
+         <span class="caption">Fruits</span>
+      </div>
+      <div class="card" style="cursor: pointer; background-color: #ffd86f"
+         onclick="onNavigate('/sports'); return false;">
+         <img src="/assets/img/category/Sports.jpg" class="image">
+         <span class="caption">Sports</span>
+      </div>
+      <div class="card" style="cursor: pointer; background-color: #ffd86f"
+         onclick="onNavigate('/vegetables'); return false;">
+         <img src="/assets/img/category/Vegetables.jpg" class="image">
+         <span class="caption">Vegetables</span>
+      </div>
+   </section>
+
+   <footer class="footer"> 
+      
+      <span>Project by <a href="https://github.com/nAzdAc">Max Andreev</a> in 2020</span>
+      <a href="https://rs.school/js/">
+      <img src="/assets/img/logo.png">
+      </a>
+   </footer>
+
+   <script src="js/app.js"></script>
+</body>
+
+</html>
