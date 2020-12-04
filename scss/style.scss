@@ -2,15 +2,20 @@
 @import "switch.scss";
 
 
-//  Variable
+//  Variables
 
 
 $content-width: 85%;
 
 body {
-   height: 100vh;
+   min-height: 100vh;
    background-color: #23a6d5;
-   padding: 130px 10px 20px 10px;
+   padding: 180px 10px 10px 10px;
+   display: flex;
+   flex-direction: column;
+   flex-wrap: wrap;
+   justify-content: space-between;
+   
 
 
    &.lock {
@@ -28,7 +33,7 @@ body {
    display: flex;
    justify-content: center;
    align-items: center;
-   z-index: 3;
+   z-index: 4;
 
 
    .header-wrapper {
@@ -39,11 +44,13 @@ body {
       align-items: center;
       padding: 10px;
 
+
       .header__burger {
          display: block;
          position: relative;
          width: 40px;
          height: 30px;
+
 
          &:hover {
             cursor: pointer;
@@ -57,6 +64,7 @@ body {
             width: 100%;
             height: 5px;
             top: 12.5px;
+
          }
 
          &:before {
@@ -68,6 +76,7 @@ body {
             left: 0;
             top: 0px;
             transition: all 0.6s;
+
          }
 
          &:after {
@@ -79,6 +88,7 @@ body {
             left: 0;
             bottom: 0px;
             transition: all 0.6s;
+
          }
 
          &.active span {
@@ -100,6 +110,23 @@ body {
    }
 }
 
+.overlay {
+   position: absolute;
+   background-color: rgba(138, 138, 138, 0.5);
+   top: 0;
+   left: 0;
+   right: 0;
+   bottom: 0;
+   display: none;
+
+
+   &.active {
+
+      cursor: pointer;
+      display: block;
+      z-index: 2;
+   }
+}
 
 .header-menu {
    position: fixed;
@@ -113,6 +140,7 @@ body {
    height: 100%;
    background: linear-gradient(40deg, #00bf82, #0099ae);
    transition: all 0.8s;
+   z-index: 3;
 
    &.active {
       position: fixed;
@@ -148,57 +176,187 @@ body {
             opacity: 1;
          }
       }
+   }
+}
 
+.play-menu {
+   width: 80%;
+   height: 50px;
+   position: absolute;
+   left: 0;
+   top: 110px;
+   display: flex;
+   justify-content: space-between;
+   flex-wrap: wrap;
 
-
+   .play-menu-stars {
+      width: 62%;
+      height: 50px;
 
 
    }
 
+   .button-start-game {
+      display: none;
+      width: 80px;
+      height: 50px;
+      border: none;
+      background-color: $color-carrot;
+      color: $color-silver;
+      border-radius: 10px;
+      cursor: pointer;
+      transition: all 0.5s;
+      text-transform: uppercase;
+      font-weight: 600;
 
 
+      &.start {
+         display: block;
+         
+
+         &.play {
+            background-color: $color-silver;
+         }
+      }
+   }
 }
+
+
+
 
 .container {
    margin: 0 auto;
    padding: 0px;
    width: $content-width;
-   //background-color: black;
    display: flex;
    flex-wrap: wrap;
    justify-content: space-evenly;
-   color: $color-silver;
-
-   &.play {
-      color: $color-carrot;
-   }
+   color: #444;
 
    .card {
       width: 220px;
       margin: 10px;
       height: 220px;
-      background-color: white;
       border-radius: 10px;
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: space-around;
-      align-items: flex-end;
+      opacity: 1;
       font-size: 30px;
       padding-bottom: 5px;
+      perspective: 1000px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      align-items: center;
+
+      &.train {
+         transition: all 0.8s;
+         background-color: $color-silver;
+         color:  #444;
+      }
+
+      &.play {
+         background-color: $color-carrot;
+         color: $color-white;
+      }
+
+      &.bad {
+         pointer-events: none;
+         opacity: 0.5;
+      }
 
       .image {
-         
          width: 100%;
          height: 80%;
+         border-radius: 10px 10px 0px 0px;
       }
 
-      &:hover {
-         cursor: pointer;
+      .front,
+      .back {
+         position: absolute;
+         width: 100%;
+         height: 100%;
+         background-color: #ffd86f;
+         display: flex;
+         flex-wrap: wrap;
+         justify-content: center;
+         align-items: flex-end;
+         transition: 1s;
+         backface-visibility: hidden;
+         padding-bottom: 5px;
+         border-radius: 10px;
 
-         box-shadow: 5px -5px 10px 5px #24d7f7;
+
+         .category-image {
+            position: absolute;
+            top: 0px;
+            left: 0px;
+            width: 100%;
+            height: 80%;
+            border-radius: 10px 10px 0px 0px;
+            transition: all 0.6s;
+
+            
+
+
+            &.play {
+               position: absolute;
+               top: 0px;
+               left: 0px;
+               width: 100%;
+               height: 100%;
+               border-radius: 10px 10px 10px 10px;
+            }
+
+         }
+
+         .info {
+            width: 100%;
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+
+            .caption {
+               font-size: 18px;
+               align-self: center;
+
+            }
+         }
       }
 
-      .button {
+      .back {
+         transform: rotateY(180deg);
+         padding-bottom: 15px;
+
+         .overlay {
+            display: block;
+            opacity: 0.1;
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: white;
+            z-index: 1;
+         }
+
+         &:hover {
+            cursor: pointer;
+         }
+
+         .caption {
+            font-size: 18px;
+         }
+      }
+
+      .rotate-small {
+         transform: rotateY(180deg);
+      }
+
+      .rotate-big {
+         transform: rotateY(360deg);
+      }
+
+      .button-rotate,
+      .button-sound {
          width: 30px;
          height: 30px;
          border-radius: 10px;
@@ -210,4 +368,69 @@ body {
       }
 
    }
+}
+
+
+.footer {
+   align-self: flex-end;
+   height: 50px;
+   width: 100%;
+   background-color: rgb(69, 151, 151);
+   display: flex;
+   flex-wrap: wrap;
+   justify-content: space-around;
+   align-items: center;
+   color: white;
+   font-size: 20px;
+
+   & img {
+      height: 50px;
+      
+   }
+
+   & span a {
+      color: rgb(51, 51, 51);
+   }
+
+}
+
+.end-game {
+   width: 100%;
+   height: 100%;
+   display: flex;
+   flex-wrap: wrap;
+   flex-direction: column;
+   justify-content: space-between;
+   align-items: center;
+
+   .end-game-image {
+      width: 100%;
+
+   }
+
+   .end-game-caption {
+      display: flex;
+      justify-content: center;
+      width: 100%;
+      font-size: 35px;
+      color: $color-carrot;
+      font-weight: bold;
+   }
+}
+
+@media all and (max-width: 540px) {
+   .footer {
+      font-size: 13px;
+
+      & img {
+         width: 80px;
+      }
+   }
+
+   .end-game-caption {
+      
+      font-size: 25px;
+      
+   }
+
 }
