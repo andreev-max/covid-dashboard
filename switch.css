@@ -1,0 +1,155 @@
+
+.button-switch {
+	font-size: 20px;
+   height: 50px;
+   margin-bottom: 10px;
+	position: relative;
+	width: 100%;
+}
+
+.button-switch .lbl-off,.button-switch .lbl-on {
+	cursor: pointer;
+	display: block;
+	font-size: 20px;
+	font-weight: bold;
+	position: absolute;
+	top: 10px;
+	transition: opacity 0.4s ease-out 0.1s;
+	text-transform: uppercase;
+}
+
+.button-switch .lbl-off {
+   color: red;
+	right: 10px;
+}
+
+.button-switch .lbl-on {
+	color: red;
+	opacity: 0;
+	left: 5px;
+}
+
+.button-switch .switch {
+	height: 0;
+	font-size: 1em;
+	left: 0;
+	line-height: 0;
+	outline: none;
+	position: absolute;
+	top: 0;
+	width: 0;
+}
+
+.button-switch .switch:after,.button-switch .switch:before {
+	content: "";
+	font-size: 1em;
+	position: absolute;
+}
+
+.button-switch .switch:before {
+	border-radius: 30px;
+	background-color: #404040;
+	height: 40px;
+	left: 0;
+	top: 0;
+	width: 190px;
+}
+
+.button-switch .switch:after {
+	border-radius: 50%;
+	background-color: #5c5c5c;
+	height: 35px;
+	transform: translate(5px, 2.5px);
+	transition: transform 0.4s ease-out 0.1s;
+	width: 35px;
+}
+
+.button-switch .switch:checked:after {
+	transform: translate(150px, 2.5px);
+}
+
+.button-switch .switch:checked~.lbl-off {
+	opacity: 0;
+}
+
+.button-switch .switch:checked~.lbl-on {
+	opacity: 1;
+}
+
+
+.button-switch2 {
+	font-size: 20px;
+   height: 50px;
+   margin-bottom: 10px;
+	position: relative;
+	width: 100%;
+}
+
+.button-switch2 .lbl-off,.button-switch2 .lbl-on {
+	cursor: pointer;
+	display: block;
+	font-size: 15px;
+	font-weight: bold;
+	position: absolute;
+	top: 13px;
+	transition: opacity 0.4s ease-out 0.1s;
+	text-transform: uppercase;
+}
+
+.button-switch2 .lbl-off {
+   color: red;
+	right: 10px;
+}
+
+.button-switch2 .lbl-on {
+	color: red;
+	opacity: 0;
+	left: 5px;
+}
+
+.button-switch2 .switch2 {
+	height: 0;
+	font-size: 1em;
+	left: 0;
+	line-height: 0;
+	outline: none;
+	position: absolute;
+	top: 0;
+	width: 0;
+}
+
+.button-switch2 .switch2:after,.button-switch2 .switch2:before {
+	content: "";
+	font-size: 1em;
+	position: absolute;
+}
+
+.button-switch2 .switch2:before {
+	border-radius: 30px;
+	background-color: #404040;
+	height: 40px;
+	left: 0;
+	top: 0;
+	width: 190px;
+}
+
+.button-switch2 .switch2:after {
+	border-radius: 50%;
+	background-color: #5c5c5c;
+   height: 35px;
+   width: 35px;
+	transform: translate(5px, 2.5px);
+	transition: transform 0.4s ease-out 0.1s;
+}
+
+.button-switch2 .switch2:checked:after {
+	transform: translate(150px, 2.5px);
+}
+
+.button-switch2 .switch2:checked~.lbl-off {
+	opacity: 0;
+}
+
+.button-switch2 .switch2:checked~.lbl-on {
+	opacity: 1;
+}
