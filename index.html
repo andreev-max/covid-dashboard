@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+   <meta charset="UTF-8" />
+   <meta name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no">
+   <link rel="stylesheet" href="nullstyle.css" />
+   <link rel="stylesheet" href="style.css" />
+   <link rel="stylesheet" href="switch.css" />
+   <title>COVID</title>
+</head>
+
+<body>
+
+   <div class="countries-list">
+      <select class="covid-parameters">
+         <option value="TotalConfirmed">Total Confirmed</option>
+         <option value="TotalDeaths">Total Deaths</option>
+         <option value="TotalRecovered">Total Recovered</option>
+         <option value="NewConfirmed">New Confirmed</option>
+         <option value="NewDeaths">New Deaths</option>
+         <option value="NewRecovered">New Recovered</option>
+         <option value="TotalConfirmed-POP">Total Confirmed / 100 thousand</option>
+         <option value="august">August</option>
+         <option value="september">September</option>
+         <option value="october">October</option>
+         <option value="november">November</option>
+         <option value="december">December</option>
+      </select>
+
+
+      <input type="text" class="search-covid" placeholder="Search for a Country">
+      <div class="covid-results"></div>
+   </div>
+
+   <div class="table">
+<div class="toggles">
+   <div class="button-switch">
+         <input type="checkbox" id="switch-orange" class="switch" />
+         <label for="switch-orange" class="lbl-off">Total</label>
+         <label for="switch-orange" class="lbl-on">Last Day</label>
+      </div>
+
+      <div class="button-switch2">
+         <input type="checkbox" id="switch-orange2" class="switch2 switch" />
+         <label for="switch-orange2" class="lbl-off">Absolute</label>
+         <label for="switch-orange2" class="lbl-on">/ 100 thnd people</label>
+      </div>
+</div>
+      
+      
+      <div class="covid-values">
+         
+         <div class="confirmed covid-data">
+            <p class="text text-confirmed">Total Confirmed:</p>
+            <p class="covid-value covid-value-confirmed"></p>
+         </div>
+         <div class="deaths covid-data">
+            <p class="text text-deaths">Total Deaths:</p>
+            <p class="covid-value covid-value-deaths"></p>
+         </div>
+         <div class="recovered covid-data">
+            <p class="text text-recovered">Total Recovered:</p>
+            <p class="covid-value covid-value-recovered"></p>
+         </div>
+
+      </div>
+
+   </div>
+   <!--
+   <div class="slider-item total-deaths">
+            <h1 class="slide-title">Global Deaths</h1>
+            <h2 class="value value-total-deaths"></h2>
+            <h2>Instant Search</h2>
+            <input type="text" class="search" placeholder="Search for a Country">
+            <div class="results"></div>
+         </div>
+
+
+         <div class="slider-item total-recovered">
+            <h1 class="slide-title">Global Recovered</h1>
+            <h2 class="value value-total-recovered"></h2>
+-->
+
+
+   <script src="main.js"> </script>
+
+</body>
+
+</html>
