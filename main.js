@@ -34,21 +34,23 @@ function numberWithCommas(x) {
 const fetchData = async () => {
    countries = await fetch('https://restcountries.eu/rest/v2/all?fields=alpha2Code;population;flag').then(res => res.json());
    globalValues = await fetch('https://api.covid19api.com/summary').then(res => res.json());
-
 }
 
+
 const showTable = async () => {
-   await fetchData();
+   await fetchData().then(function(globalValues) {
+      console.log(globalValues)
+   });
    console.log(globalValues)
    if (!changerDay.checked && !changerPeople.checked) {
       valueConfirmed.textContent = `${globalValues.Global.TotalConfirmed}`;
       valueDeaths.textContent = `${globalValues.Global.TotalDeaths}`;
       valueRecovered.textContent = `${globalValues.Global.TotalRecovered}`;
-   } else if(changerDay.checked && !changerPeople.checked) {
+   } else if (changerDay.checked && !changerPeople.checked) {
       valueConfirmed.textContent = `${globalValues.Global.NewConfirmed}`;
       valueDeaths.textContent = `${globalValues.Global.NewDeaths}`;
       valueRecovered.textContent = `${globalValues.Global.NewRecovered}`;
-   } else if(!changerDay.checked && changerPeople.checked) {
+   } else if (!changerDay.checked && changerPeople.checked) {
       valueConfirmed.textContent = `${(Math.round(globalValues.Global.TotalConfirmed * 100000 / 7827000000))}`;
       valueDeaths.textContent = `${(Math.round(globalValues.Global.TotalDeaths * 100000 / 7827000000))}`;
       valueRecovered.textContent = `${(Math.round(globalValues.Global.TotalRecovered * 100000 / 7827000000))}`;
@@ -63,6 +65,8 @@ const showTable = async () => {
 7 827 000 000 население планеты === 69 582 029 общее количество заболеваний
 100 000 на сто тысяч людей====  x количество заболеваний
 */
+
+
 const showList = async () => {
    covidResult.innerHTML = '';
    await fetchData();
@@ -84,35 +88,31 @@ const showList = async () => {
    resultArr
       .filter(country => country.Country.toLowerCase().includes(searchCovid.toLowerCase()))
       .forEach(country => {
+
          const li = document.createElement('li'),
             countryFlag = document.createElement('img'),
             countryName = document.createElement('h3'),
-            countryInfo = document.createElement('div'),
-            countryTotalDeaths = document.createElement('p'),
-            countryPopulationText = document.createElement('h5');
-
-         li.classList.add('country-item');
-         countryInfo.classList.add('country-item__info');
-         countryName.classList.add('country-item__name');
-         countryTotalDeaths.classList.add('country-item__name');
-         countryPopulationText.classList.add('country-item__population--text');
+            countryValue = document.createElement('p');
 
          countryFlag.src = country.flag;
+         countryFlag.classList.add('country-item__flag');
+         li.classList.add('country-item');
+         countryName.classList.add('country-item__name');
+         countryValue.classList.add('country-item__value');
 
-         countryFlag.classList.add('country-item__flag')
 
+         li.addEventListener('click', () => {
+            console.log(li)
+         })
 
          countryName.innerText = country.Country;
-         countryTotalDeaths.innerText = country.TotalConfirmed;
-         countryPopulationText.innerText = 'Total cases';
+         countryValue.innerText = country.TotalConfirmed;
 
-         countryInfo.appendChild(countryTotalDeaths);
-         countryInfo.appendChild(countryPopulationText);
-
+         ul.appendChild(li);
          li.appendChild(countryFlag);
          li.appendChild(countryName);
-         li.appendChild(countryInfo);
-         ul.appendChild(li);
+         li.appendChild(countryValue);
+
       })
    covidResult.appendChild(ul);
 }
