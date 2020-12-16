@@ -48,7 +48,7 @@
 
 .button-switch .switch:before {
 	border-radius: 30px;
-	background-color: #404040;
+	background-color: #5e5d5d;
 	height: 40px;
 	left: 0;
 	top: 0;
@@ -57,7 +57,7 @@
 
 .button-switch .switch:after {
 	border-radius: 50%;
-	background-color: #5c5c5c;
+	background-color: #404040;
 	height: 35px;
 	transform: translate(5px, 2.5px);
 	transition: transform 0.4s ease-out 0.1s;
@@ -126,7 +126,7 @@
 
 .button-switch2 .switch2:before {
 	border-radius: 30px;
-	background-color: #404040;
+	background-color: #5e5d5d;
 	height: 40px;
 	left: 0;
 	top: 0;
@@ -135,7 +135,7 @@
 
 .button-switch2 .switch2:after {
 	border-radius: 50%;
-	background-color: #5c5c5c;
+	background-color: #404040;
    height: 35px;
    width: 35px;
 	transform: translate(5px, 2.5px);
