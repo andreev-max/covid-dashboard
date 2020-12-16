@@ -131,8 +131,9 @@ micro.addEventListener("click", () => {
             .map(result => result[0])
             .map(result => result.transcript)
             .join('');
-            display.value = text;
-            searchCovid += text;
+        display.value = text;
+        searchCovid = text;
+        showList(selectedOption);
         rec.addEventListener('end', rec.start);
     });
     properties.microfone ? rec.start() : rec.abort();
