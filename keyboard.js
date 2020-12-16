@@ -110,7 +110,7 @@ volume.addEventListener("click", () => {
     properties.sound ? volume.innerHTML = createIconHTML("/assets/volume_up.png") : volume.innerHTML = createIconHTML("/assets/volume_off.png");
 });
 
-
+// воспроизводит звук
 function playSound() {
     const audio = new Audio();
     audio.src = "/assets/tink.wav";
