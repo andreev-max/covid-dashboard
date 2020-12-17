@@ -20,77 +20,104 @@
 
 
    <div class="countries-list">
-      <div class="form-button">
-         <form name="countryForm" class="country-form">
-            <select name="parameters" class="covid-parameters">
-               <option class="parameter" value="TotalConfirmed">Total Confirmed</option>
-               <option class="parameter" value="TotalDeaths">Total Deaths</option>
-               <option class="parameter" value="TotalRecovered">Total Recovered</option>
-               <option class="parameter" value="NewConfirmed">New Confirmed</option>
-               <option class="parameter" value="NewDeaths">New Deaths</option>
-               <option class="parameter" value="NewRecovered">New Recovered</option>
-               <option class="parameter" value="TotalConfirmed">Total Confirmed/100 thnd</option>
-               <option class="parameter" value="TotalDeaths">Total Deaths/100 thnd</option>
-               <option class="parameter" value="TotalRecovered">Total Recovered/100 thnd</option>
-               <option class="parameter" value="NewConfirmed">New Confirmed/100 thnd</option>
-               <option class="parameter" value="NewDeaths">New Deaths/100 thnd</option>
-               <option class="parameter" value="NewRecovered">New Recovered/100 thnd</option>
-            </select>
-         </form>
-         <button class="keyboard-button-display">
-            <img src="/assets/keyboard.png">
-         </button>
-      </div>
+      <button class="button full-display">
+         <img src="/assets/open-full.png">
+      </button>
+      <button class="button keyboard-button-display">
+         <img src="/assets/keyboard.png">
+      </button>
+
+
+
+      <form name="countryForm" class="country-form">
+         <select name="parameters" class="covid-parameters">
+            <option class="parameter" value="">Total Confirmed</option>
+            <option class="parameter" value="">Total Deaths</option>
+            <option class="parameter" value="">Total Recovered</option>
+            <option class="parameter" value="">New Confirmed</option>
+            <option class="parameter" value="">New Deaths</option>
+            <option class="parameter" value="">New Recovered</option>
+            <option class="parameter" value="100">Total Confirmed/100.000</option>
+            <option class="parameter" value="100">Total Deaths/100.000</option>
+            <option class="parameter" value="100">Total Recovered/100.000</option>
+            <option class="parameter" value="100">New Confirmed/100.000</option>
+            <option class="parameter" value="100">New Deaths/100.000</option>
+            <option class="parameter" value="100">New Recovered/100.000</option>
+         </select>
+      </form>
       <input type="text" class="search-covid" placeholder="Search for a Country">
       <div class="covid-results"></div>
    </div>
 
 
+
+
    <!-- СПИСОК КОНЕЦ -->
 
 
-   <!-- ТАБЛИЦА СТАРТ -->
 
 
-   <div class="table">
-      <div class="toggles">
-         <div class="button-switch">
-            <input type="checkbox" id="switch-orange" class="switch" />
-            <label for="switch-orange" class="lbl-off">Total</label>
-            <label for="switch-orange" class="lbl-on">Last Day</label>
+   <div class="table-chart">
+
+      <!-- ТАБЛИЦА СТАРТ -->
+
+      <div class="table">
+         <button class="button full-display">
+            <img src="/assets/open-full.png">
+         </button>
+         <div class="toggles">
+            <div class="button-switch">
+               <input type="checkbox" id="switch-orange" class="switch" />
+               <label for="switch-orange" class="lbl-off">Total</label>
+               <label for="switch-orange" class="lbl-on">Last Day</label>
+            </div>
+            <div class="button-switch2">
+               <input type="checkbox" id="switch-orange2" class="switch2 switch" />
+               <label for="switch-orange2" class="lbl-off">Absolute</label>
+               <label for="switch-orange2" class="lbl-on">/ 100.000 people</label>
+            </div>
          </div>
 
-         <div class="button-switch2">
-            <input type="checkbox" id="switch-orange2" class="switch2 switch" />
-            <label for="switch-orange2" class="lbl-off">Absolute</label>
-            <label for="switch-orange2" class="lbl-on">/ 100 thnd people</label>
+         <div class="title">
+            <h4 class="object">Global</h4>
+            <p class="population-text population">Population: </p>
+            <p class="population-value population">7827000000</p>
          </div>
+
+         <div class="covid-values">
+            <div class="confirmed covid-data">
+               <p class="text text-confirmed">Confirmed:</p>
+               <p class="covid-value covid-value-confirmed"></p>
+            </div>
+            <div class="deaths covid-data">
+               <p class="text text-deaths">Deaths:</p>
+               <p class="covid-value covid-value-deaths"></p>
+            </div>
+            <div class="recovered covid-data">
+               <p class="text text-recovered">Recovered:</p>
+               <p class="covid-value covid-value-recovered"></p>
+            </div>
+         </div>
+
       </div>
 
 
-      <div class="covid-values">
-         <h4 class="object">Global</h4>
-         <p class="population-text population">Population: </p>
-         <p class="population-value population">7827000000</p>
-         <div class="confirmed covid-data">
-            <p class="text text-confirmed">Confirmed:</p>
-            <p class="covid-value covid-value-confirmed"></p>
-         </div>
-         <div class="deaths covid-data">
-            <p class="text text-deaths">Deaths:</p>
-            <p class="covid-value covid-value-deaths"></p>
-         </div>
-         <div class="recovered covid-data">
-            <p class="text text-recovered">Recovered:</p>
-            <p class="covid-value covid-value-recovered"></p>
-         </div>
+      <!-- ТАБЛИЦА КОНЕЦ -->
+
+      <!-- ГРАФИК СТАРТ -->
+
+
+      <div class="chart">
 
       </div>
 
+
+      <!-- ГРАФИК КОНЕЦ -->
    </div>
 
 
-   <!-- ТАБЛИЦА КОНЕЦ -->
+
+
 
    <!-- КЛАВИАТУРА СТАРТ-->
 
