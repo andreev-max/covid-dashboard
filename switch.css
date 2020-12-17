@@ -20,7 +20,7 @@
 
 .button-switch .lbl-off {
    color: red;
-	right: 10px;
+	right: 15px;
 }
 
 .button-switch .lbl-on {
@@ -31,7 +31,6 @@
 
 .button-switch .switch {
 	height: 0;
-	font-size: 1em;
 	left: 0;
 	line-height: 0;
 	outline: none;
@@ -42,7 +41,6 @@
 
 .button-switch .switch:after,.button-switch .switch:before {
 	content: "";
-	font-size: 1em;
 	position: absolute;
 }
 

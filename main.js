@@ -6,29 +6,35 @@ const valueConfirmed = document.querySelector('.covid-value-confirmed'),
    covidResult = document.querySelector('.covid-results'),
    changerDay = document.querySelector('.switch'),
    changerPeople = document.querySelector('.switch2'),
-   results = document.querySelector('.results'),   
+   results = document.querySelector('.results'),
    territory = document.querySelector('.object'), // страна для которой отображаются данные в таблице
    countryPopulation = document.querySelector('.population-value'), //население страны ИЗ СПИСКА для которой отображаются данные в таблице   
    parameters = [...document.querySelectorAll('.parameter')],
+   buttonFull = [...document.querySelectorAll('.full-display')],
+   
    allPeople = 7827000000, // население планеты из википедии
    calculationPeople = 100000; // по ТЗ из расчета на 100 тысяч населения
 
 
 
 
-const countrySelect = countryForm.parameters;
-const selectedOption = countrySelect.options[countrySelect.selectedIndex].value;
+const regexp = /[a-zA-Z]/g;
+let countrySelect = countryForm.parameters;
 
+let selectedOption = countrySelect.options[countrySelect.selectedIndex].innerHTML.match(regexp).join('');
+
+let selectedOptionPopulation = countrySelect.options[countrySelect.selectedIndex].value;
 countrySelect.addEventListener("change", changeParameter);
 
 
 function changeParameter() {
-   const selectedOption = countrySelect.options[countrySelect.selectedIndex].value;
-   showList(selectedOption)
+   selectedOption = countrySelect.options[countrySelect.selectedIndex].innerHTML.match(regexp).join('');
+   selectedOptionPopulation = countrySelect.options[countrySelect.selectedIndex].value;
+   showList(selectedOption, selectedOptionPopulation)
    console.log(selectedOption)
 }
 
-   
+
 
 
 
@@ -42,18 +48,24 @@ changerPeople.addEventListener('click', () => {
    showTable();
 })
 
-let searchCovid = '',
-   countries,  // результат апишки откуда берем флаг и население страны плюс там есть alpha2Code для сравнения стран из другого элемента
-   covid,   // JSON объект который приходит с covid19api в нем два объекта: один глобальные значение 6 штук для всего мира и второй это массив 192 стран
-   covidCountries,  // массив из 192 объектов(стран) внутри которых 6 ковидных значений и есть CountryCode который равен alpha2Code
-   population, // переменная которая равна населению отображаемой страны (для расчётов)
-   globalValues, // из JSON объекта объект с глобальными значениями
-   displayedCountry;  // страна которую отображаем в таблице
+let error = null;
+let searchCovid = '';
+let countries = {data: null, isLoaded: false}; // результат апишки откуда берем флаг и население страны плюс там есть alpha2Code для сравнения стран из другого элемента
+let covidInfo = {data: null, isLoaded: false}; // JSON объект который приходит с covid19api в нем два объекта: один глобальные значение 6 штук для всего мира и второй это массив 192 стран
+let covidCountries = []; // массив из 192 объектов(стран) внутри которых 6 ковидных значений и есть CountryCode который равен alpha2Code
+let population; // переменная которая равна населению отображаемой страны (для расчётов)
+let globalValues; // из JSON объекта объект с глобальными значениями
+let displayedCountry; // страна которую отображаем в таблице
 
 
 //сортировка массива в листе по убыванию в зависимости от выбранного показателя
 function sortArrByField(field) {
-   return (a, b) => a[field] > b[field] ? -1 : 1;
+   if (selectedOptionPopulation === '100') {
+      return (a, b) => (a[field] * calculationPeople / a.population) > (b[field] * calculationPeople / b.population) ? -1 : 1;
+   } else {
+      return (a, b) => a[field] > b[field] ? -1 : 1;
+   }
+   
 }
 
 // функция для красивого отображения чисел (расставляет запятые через каждые три цифры(как в калькуляторах))
@@ -62,29 +74,40 @@ function numberWithCommas(x) {
 }
 
 // апишка для получения JSON объекта по ковидным значениям
-const fetchData = async () => {
-   return covid = await fetch('https://api.covid19api.com/summary').then(res => res.json());
+const fetchCovidValue = async () => {
+   try {
+   const res = await fetch('https://api.covid19api.com/summary');
+   covidInfo.data = await res.json();
+   covidCountries = covidInfo.data.Countries;
+   globalValues = covidInfo.data.Global;
+   covidInfo.isLoaded = true;
+   } catch(e) {
+      error = e;
+   }
 }
 
 // апишка для получения флагов
 const fetchCountries = async () => {
-   return countries = await fetch('https://restcountries.eu/rest/v2/all?fields=alpha2Code;population;flag').then(res => res.json());
+   try {
+      const res = await fetch('https://restcountries.eu/rest/v2/all?fields=alpha2Code;population;flag');
+      countries.data = await res.json();
+      countries.isLoaded = true;
+      } catch(e) {
+         error = e;
+      }
 }
 
 // функция для показа значений для всего мира изначально при запуске страницы
 const showTable = async () => {
-   await fetchData().then(function (covid) {
-      displayedCountry = territory.textContent;
-      covidCountries = covid["Countries"];
-      globalValues = covid['Global'];
-      population = countryPopulation.textContent;
-      if (displayedCountry === 'Global') {
-         table(globalValues, allPeople)
-      } else {
-         const countryFromList = covidCountries.find(city => city.Country === displayedCountry);
-         table(countryFromList, population)
-      }
-   });
+   if (covidInfo.isLoaded === false) await fetchCovidValue();
+   displayedCountry = territory.textContent;
+   population = countryPopulation.textContent;
+   if (displayedCountry === 'Global') {
+      table(globalValues, allPeople)
+   } else {
+      const countryFromList = covidCountries.find(city => city.Country === displayedCountry);
+      table(countryFromList, population)
+   }
 };
 
 // функция для отображения данных в таблице в  зависимости от страны
@@ -98,9 +121,9 @@ function table(obj, countPeople) {
       valueDeaths.textContent = `${obj.NewDeaths}`;
       valueRecovered.textContent = `${obj.NewRecovered}`;
    } else if (!changerDay.checked && changerPeople.checked) {
-      valueConfirmed.textContent = `${(Math.ceil(obj.TotalConfirmed * calculationPeople / countPeople))}`;   // делаю не Math.round потому что если отображать данные для страны
-      valueDeaths.textContent = `${(Math.ceil(obj.TotalDeaths * calculationPeople / countPeople))}`;        // за последний день и на 100 тысяч населения то будет ноль
-      valueRecovered.textContent = `${(Math.ceil(obj.TotalRecovered * calculationPeople / countPeople))}`;  // как-то некорректно)) поэтому пусть лучше будет 1
+      valueConfirmed.textContent = `${(Math.ceil(obj.TotalConfirmed * calculationPeople / countPeople))}`; // делаю не Math.round потому что если отображать данные для страны
+      valueDeaths.textContent = `${(Math.ceil(obj.TotalDeaths * calculationPeople / countPeople))}`; // за последний день и на 100 тысяч населения то будет ноль
+      valueRecovered.textContent = `${(Math.ceil(obj.TotalRecovered * calculationPeople / countPeople))}`; // как-то некорректно)) поэтому пусть лучше будет 1
    } else {
       valueConfirmed.textContent = `${(Math.ceil(obj.NewConfirmed * calculationPeople / countPeople))}`;
       valueDeaths.textContent = `${(Math.ceil(obj.NewDeaths * calculationPeople / countPeople))}`;
@@ -109,18 +132,20 @@ function table(obj, countPeople) {
 }
 
 // функция для отображения списка стран
-const showList = async (parameter) => {
+const showList = async (parameter, pop) => {
    covidResult.innerHTML = '';
-   await fetchData();
-   await fetchCountries();
-   covidCountries = covid["Countries"];
+
+   if (covidInfo.isLoaded === false || countries.isLoaded === false) await Promise.all([fetchCovidValue(), fetchCountries()]);
+
    const resultArr = covidCountries.map((country) => {
-      const countryFlag = Object.values(countries).find((flagElem) => flagElem.alpha2Code === country.CountryCode);
+      const countryFlag = Object.values(countries.data).find((flagElem) => flagElem.alpha2Code === country.CountryCode);
       return ({
          ...country,
          ...countryFlag
       })
    })
+
+
    
    resultArr.sort(sortArrByField(parameter));
 
@@ -132,24 +157,36 @@ const showList = async (parameter) => {
       .forEach(country => {
 
          const li = document.createElement('li'),
-            countryFlag = document.createElement('img'),
             countryName = document.createElement('h3'),
+            countryInfo = document.createElement('div'),
+            countryFlag = document.createElement('img'),
             countryValue = document.createElement('p');
 
          countryFlag.src = country.flag;
          countryFlag.classList.add('country-item__flag');
          li.classList.add('country-item');
          countryName.classList.add('country-item__name');
+         countryInfo.classList.add('country-item__info');
          countryValue.classList.add('country-item__value');
+
+         
+         
 
 
          countryName.innerText = country.Country;
-         countryValue.innerText = country[parameter];
+         if (pop === '100') {
+            
+            countryValue.innerText = Math.ceil(country[parameter] * calculationPeople / country.population);
+            
+         } else {
+            countryValue.innerText = country[parameter];
+         }
+         
 
          // при нажатии на страну в списке меняем содержание таблицы для этой страны
          li.addEventListener('click', () => {
             displayedCountry = covidCountries.find(city => city.Country === li.children[1].textContent);
-            population = countries.find(city => city.alpha2Code === country.CountryCode).population;
+            population = countries.data.find(city => city.alpha2Code === country.CountryCode).population;
             countryPopulation.textContent = population;
             territory.textContent = displayedCountry.Country;
             table(displayedCountry, population)
@@ -157,21 +194,25 @@ const showList = async (parameter) => {
 
 
          ul.appendChild(li);
-         li.appendChild(countryFlag);
+         li.appendChild(countryInfo);
          li.appendChild(countryName);
-         li.appendChild(countryValue);
+         countryInfo.appendChild(countryFlag);
+         countryInfo.appendChild(countryValue);
 
       })
    covidResult.appendChild(ul);
 }
 
 
-showList(selectedOption);
+showList(selectedOption, selectedOptionPopulation);
 showTable();
 
 
 // поисковик в списке чтобы при вводе данных показывались только те страны что соответствуют содержимому строки в поисковике
 display.addEventListener('input', (e) => {
    searchCovid = e.target.value;
-   showList(selectedOption);
+   showList(selectedOption, selectedOptionPopulation);
 })
+
+
+// END OF THE CODE nAzdAc

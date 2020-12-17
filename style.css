@@ -1,44 +1,58 @@
-.countries-list {
+body {
+   display: flex;
+   flex-wrap: wrap;
+   flex-direction: row;
+   justify-content: space-between;
+
+}
+
+.button {
+   width: 30px;
+   height: 30px;
+   border-radius: 10px;
+   background-color: teal;
+   color: wheat;
+   align-self: flex-end;
+}
+
+.full-display {
    position: absolute;
-   left: 0;
-   top: 0;
+   top: 5px;
+   right: 5px;
+}
+
+
+/* стили для СПИСКА СТАРТ */
+
+
+.countries-list {
+   position: relative;
    display: flex;
    flex-wrap: wrap;
    flex-direction: column;
    align-items: center;
-   justify-content: space-evenly;
-   width: 25%;
+   justify-content: space-between;
+   width: 15%;
+   min-width: 170px;
    background-color: #404040;
    height: 100%;
-}
-
-.form-button {
-   width: 95%;
-   height: 40px;
-   display: flex;
-   flex-wrap: wrap;
-   justify-content: space-between;
-}
-
-.country-form {
-   width: 80%;
-   height: 100%;
-
+   padding: 5px 5px 20px 5px;
 }
 
 .keyboard-button-display {
-   width: 40px;
-   height: 100%;
-   border-radius: 10px;
-   background-color: teal;
-   color: wheat;
+   align-self: center;
+}
+
+.country-form {
+   width: 100%;
+   height: 45px;
 }
 
 .covid-parameters {
    width: 100%;
    height: 100%;
-   border-radius: 10px;
-   font-size: 25px;
+   border-radius: 5px;
+   font-size: 16px;
    text-align: center;
    background-color: teal;
    color: wheat;
@@ -49,29 +63,25 @@
    border-radius: 3px;
    border: 1px solid #ddd;
    outline: none;
-   padding: 15px;
-   width: 80%;
+   padding: 10px;
+   width: 95%;
 
 }
 
 .covid-results {
-   width: 95%;
+   width: 100%;
 }
 
 
 .countries {
    width: 100%;
    list-style: none;
-   padding: 0px;
-   margin: 0px;
-   max-height: 600px;
-   height: 600px;
+   height: 500px;
    overflow: auto;
 
 }
 
 .countries>[data-scroll] {
-   padding: 10px;
    cursor: pointer;
    text-align: center;
    display: block;
@@ -83,64 +93,94 @@
    border-radius: 3px;
    box-shadow: 0 2px 3px rgba(0, 0, 0, 0.3);
    display: flex;
+   flex-wrap: wrap;
    justify-content: space-between;
    align-items: center;
-   padding: 15px 10px;
-   margin: 10px 0;
-   transition: 0.5s;
+   padding: 5px;
+   margin-bottom: 10px;
    cursor: pointer;
+
+   width: 100%;
 }
 
-.country-item__flag {
-   width: 30px;
-}
+
 
 .country-item__name {
-   font-weight: normal;
-   letter-spacing: .5px;
-   margin: 0 5px;
+   width: 60%;
    text-align: center;
+}
+
+.country-item__info {
+   display: flex;
+   flex-wrap: wrap;
+   flex-direction: column;
+   justify-content: space-between;
+   align-items: center;
+   height: 100%;
+   width: 40%;
 }
 
 .country-item__value {
    color: red;
    font-weight: bold;
    letter-spacing: .5px;
-   margin: 0 5px;
    text-align: center;
 }
 
+.country-item__flag {
+   margin-bottom: 5px;
+   width: 100%;
+   max-width: 40px;
+}
 
 
+/* стили для СПИСКА КОНЕЦ */
+
+
+/* стили для ТАБЛИЦЫ СТАРТ */
+
+
+.table-chart {
+   position: relative;
+}
 
 .table {
+   position: relative;
    display: flex;
    flex-direction: column;
    flex-wrap: wrap;
    align-items: center;
    justify-content: space-between;
-   position: absolute;
-   right: 0;
-   top: 0;
-   width: 15%;
-   min-width: 200px;
+   width: 200px;
    height: 400px;
    background-color: #272727;
-   padding-top: 5px;
+   padding: 40px 5px 5px 5px;
 }
 
 .toggles {
    position: relative;
-   height: 110px;
-   width: 95%;
+   height: 100px;
+   width: 100%;
+}
+
+.title {
+   display: flex;
+   flex-wrap: wrap;
+   flex-direction: column;
+   align-items: center;
+   justify-content: space-between;
+   width: 100%;
+   font-size: 18px;
+
 }
 
 .covid-values {
    display: flex;
    flex-direction: column;
    flex-wrap: wrap;
-   width: 95%;
-   font-size: 20px;
+   justify-content: space-between;
+   width: 100%;
+   font-size: 18px;
 }
 
 .covid-data {
@@ -148,14 +188,14 @@
    background-color: #5c5c5c;
    border-radius: 3px;
    box-shadow: 0 2px 3px rgba(0, 0, 0, 0.3);
-   margin: 5px 0px;
+   margin: 3px 0px;
    text-align: center;
-   padding: 5px;
+   padding: 3px;
 }
 
 .text {
    color: snow;
-   margin-bottom: 10px;
+   margin-bottom: 3px;
 }
 
 .covid-value {
@@ -164,14 +204,25 @@
 
 .object {
    width: 100%;
-   height: 20px;
    text-align: center;
    color: wheat;
 }
 
 .population {
    width: 100%;
-   height: 20px;
    text-align: center;
    color: wheat;
 }
+
+
+/* стили для ТАБЛИЦЫ КОНЕЦ */
+
+
+/* стили для ГРАФИКА СТАРТ */
+
+
+
+
+
+
+/* стили для ГРАФИКА КОНЕЦ */
