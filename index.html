@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+   <meta charset="UTF-8" />
+   <meta name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no">
+   <link rel="icon" href="/favicon.ico" type="image/x-icon">
+   <link rel="stylesheet" href="nullstyle.css" />
+   <link rel="stylesheet" href="keyboard.css" />
+   <link rel="stylesheet" href="style.css" />
+   <link rel="stylesheet" href="switch.css" />
+   <title>COVID</title>
+</head>
+
+<body>
+
+
+   <!-- СПИСОК СТАРТ -->
+
+
+   <div class="countries-list">
+      <div class="form-button">
+         <form name="countryForm" class="country-form">
+            <select name="parameters" class="covid-parameters">
+               <option class="parameter" value="TotalConfirmed">Total Confirmed</option>
+               <option class="parameter" value="TotalDeaths">Total Deaths</option>
+               <option class="parameter" value="TotalRecovered">Total Recovered</option>
+               <option class="parameter" value="NewConfirmed">New Confirmed</option>
+               <option class="parameter" value="NewDeaths">New Deaths</option>
+               <option class="parameter" value="NewRecovered">New Recovered</option>
+               <option class="parameter" value="TotalConfirmed">Total Confirmed/100 thnd</option>
+               <option class="parameter" value="TotalDeaths">Total Deaths/100 thnd</option>
+               <option class="parameter" value="TotalRecovered">Total Recovered/100 thnd</option>
+               <option class="parameter" value="NewConfirmed">New Confirmed/100 thnd</option>
+               <option class="parameter" value="NewDeaths">New Deaths/100 thnd</option>
+               <option class="parameter" value="NewRecovered">New Recovered/100 thnd</option>
+            </select>
+         </form>
+         <button class="keyboard-button-display">
+            <img src="/assets/keyboard.png">
+         </button>
+      </div>
+      <input type="text" class="search-covid" placeholder="Search for a Country">
+      <div class="covid-results"></div>
+   </div>
+
+
+   <!-- СПИСОК КОНЕЦ -->
+
+
+   <!-- ТАБЛИЦА СТАРТ -->
+
+
+   <div class="table">
+      <div class="toggles">
+         <div class="button-switch">
+            <input type="checkbox" id="switch-orange" class="switch" />
+            <label for="switch-orange" class="lbl-off">Total</label>
+            <label for="switch-orange" class="lbl-on">Last Day</label>
+         </div>
+
+         <div class="button-switch2">
+            <input type="checkbox" id="switch-orange2" class="switch2 switch" />
+            <label for="switch-orange2" class="lbl-off">Absolute</label>
+            <label for="switch-orange2" class="lbl-on">/ 100 thnd people</label>
+         </div>
+      </div>
+
+
+      <div class="covid-values">
+         <h4 class="object">Global</h4>
+         <p class="population-text population">Population: </p>
+         <p class="population-value population">7827000000</p>
+         <div class="confirmed covid-data">
+            <p class="text text-confirmed">Confirmed:</p>
+            <p class="covid-value covid-value-confirmed"></p>
+         </div>
+         <div class="deaths covid-data">
+            <p class="text text-deaths">Deaths:</p>
+            <p class="covid-value covid-value-deaths"></p>
+         </div>
+         <div class="recovered covid-data">
+            <p class="text text-recovered">Recovered:</p>
+            <p class="covid-value covid-value-recovered"></p>
+         </div>
+
+      </div>
+
+   </div>
+
+
+   <!-- ТАБЛИЦА КОНЕЦ -->
+
+   <!-- КЛАВИАТУРА СТАРТ-->
+
+
+   <div class="keyboard keyboard--hidden">
+      <div class="keyboard__keys">
+
+         <div class="row1">
+            <button data-key="192" class="keyboard__key letter">`</button>
+            <button data-key="49" class="keyboard__key letter">1</button>
+            <button data-key="50" class="keyboard__key letter">2</button>
+            <button data-key="51" class="keyboard__key letter">3</button>
+            <button data-key="52" class="keyboard__key letter">4</button>
+            <button data-key="53" class="keyboard__key letter">5</button>
+            <button data-key="54" class="keyboard__key letter">6</button>
+            <button data-key="55" class="keyboard__key letter">7</button>
+            <button data-key="56" class="keyboard__key letter">8</button>
+            <button data-key="57" class="keyboard__key letter">9</button>
+            <button data-key="48" class="keyboard__key letter">0</button>
+            <button data-key="189" class="keyboard__key letter">-</button>
+            <button data-key="187" class="keyboard__key letter">=</button>
+            <button data-key="8" class="keyboard__key keyboard__key--wide backspace">
+               <img src="/assets/backspace.png">
+            </button>
+         </div>
+
+         <div class="row2">
+            <button data-key="81" class="keyboard__key letter">q</button>
+            <button data-key="87" class="keyboard__key letter">w</button>
+            <button data-key="69" class="keyboard__key letter">e</button>
+            <button data-key="82" class="keyboard__key letter">r</button>
+            <button data-key="84" class="keyboard__key letter">t</button>
+            <button data-key="89" class="keyboard__key letter">y</button>
+            <button data-key="85" class="keyboard__key letter">u</button>
+            <button data-key="73" class="keyboard__key letter">i</button>
+            <button data-key="79" class="keyboard__key letter">o</button>
+            <button data-key="80" class="keyboard__key letter">p</button>
+            <button data-key="219" class="keyboard__key letter">{</button>
+            <button data-key="221" class="keyboard__key letter">}</button>
+            <button data-key="220" class="keyboard__key letter">\</button>
+         </div>
+         <div class="row3">
+            <button data-key="20" class="keyboard__key keyboard__key--wide keyboard__key--activatable caps">
+               <img src="/assets/keyboard_capslock.png">
+            </button>
+            <button data-key="65" class="keyboard__key letter">a</button>
+            <button data-key="83" class="keyboard__key letter">s</button>
+            <button data-key="68" class="keyboard__key letter">d</button>
+            <button data-key="70" class="keyboard__key letter">f</button>
+            <button data-key="71" class="keyboard__key letter">g</button>
+            <button data-key="72" class="keyboard__key letter">h</button>
+            <button data-key="74" class="keyboard__key letter">j</button>
+            <button data-key="75" class="keyboard__key letter">k</button>
+            <button data-key="76" class="keyboard__key letter">l</button>
+            <button data-key="186" class="keyboard__key letter">;</button>
+            <button data-key="222" class="keyboard__key letter">'</button>
+            <button data-key="13" class="keyboard__key keyboard__key--wide enter">
+               <img src="/assets/keyboard_return.png">
+            </button>
+         </div>
+         <div class="row4">
+            <button data-key="16" class="keyboard__key keyboard__key--wide keyboard__key--activatable shift">
+               <img src="/assets/arrow_circle_up.png" width="30px" height="30px">
+            </button>
+            <button data-key="90" class="keyboard__key letter">z</button>
+            <button data-key="88" class="keyboard__key letter">x</button>
+            <button data-key="67" class="keyboard__key letter">c</button>
+            <button data-key="86" class="keyboard__key letter">v</button>
+            <button data-key="66" class="keyboard__key letter">b</button>
+            <button data-key="78" class="keyboard__key letter">n</button>
+            <button data-key="77" class="keyboard__key letter">m</button>
+            <button data-key="188" class="keyboard__key letter">,</button>
+            <button data-key="190" class="keyboard__key letter">.</button>
+            <button data-key="191" class="keyboard__key letter">/</button>
+         </div>
+
+         <div class="row5">
+            <button data-key="65" class="keyboard__key keyboard__key--dark keyboard__key--wide done">
+               <img src="/assets/done_all.png">
+            </button>
+            <button data-key="65" class="keyboard__key volume">
+               <img src="/assets/volume_off.png">
+            </button>
+            <button data-key="32" class="keyboard__key keyboard__key--extra-wide space">
+               <img src="/assets/space_bar.png">
+            </button>
+            <button data-key="65" class="keyboard__key micro">
+               <img src="/assets/mic_off.png">
+            </button>
+         </div>
+
+      </div>
+
+   </div>
+
+
+   <!-- КЛАВИАТУРА КОНЕЦ-->
+
+
+   <script src="main.js"> </script>
+   <script src="keyboard.js"> </script>
+
+</body>
+
+</html>
