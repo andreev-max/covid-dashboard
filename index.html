@@ -6,10 +6,10 @@
    <meta name="viewport"
       content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no">
    <link rel="icon" href="/favicon.ico" type="image/x-icon">
-   <link rel="stylesheet" href="nullstyle.css" />
-   <link rel="stylesheet" href="keyboard.css" />
-   <link rel="stylesheet" href="style.css" />
-   <link rel="stylesheet" href="switch.css" />
+   <link rel="stylesheet" href="./assets/style/nullstyle.css" />
+   <link rel="stylesheet" href="./assets/style/keyboard.css" />
+   <link rel="stylesheet" href="./assets/style/style.css" />
+   <link rel="stylesheet" href="./assets/style/switch.css" />
    <title>COVID</title>
    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.js"></script>
 </head>
@@ -22,31 +22,30 @@
 
    <div class="countries-list">
       <button class="button full-display">
-         <img src="/assets/open-full.png">
+         <img src="/assets/icons/open-full.png">
       </button>
       <button class="button keyboard-button-display">
-         <img src="/assets/keyboard.png">
+         <img src="/assets/icons/keyboard.png">
       </button>
 
 
 
-      <form name="countryForm" class="country-form">
-         <select name="parameters" class="covid-parameters">
-            <option class="parameter" value="">Total Confirmed</option>
-            <option class="parameter" value="">Total Deaths</option>
-            <option class="parameter" value="">Total Recovered</option>
-            <option class="parameter" value="">New Confirmed</option>
-            <option class="parameter" value="">New Deaths</option>
-            <option class="parameter" value="">New Recovered</option>
-            <option class="parameter" value="100">Total Confirmed/100.000</option>
-            <option class="parameter" value="100">Total Deaths/100.000</option>
-            <option class="parameter" value="100">Total Recovered/100.000</option>
-            <option class="parameter" value="100">New Confirmed/100.000</option>
-            <option class="parameter" value="100">New Deaths/100.000</option>
-            <option class="parameter" value="100">New Recovered/100.000</option>
+      <div class="instead-form">
+         <div class="button-switch button-switch-option">
+            <input type="checkbox" id="switch-orange-option" class="switch-option switch" />
+            <label for="switch-orange-option" class="lbl-off">Absolute</label>
+            <label for="switch-orange-option" class="lbl-on">/ 100.000</label>
+         </div>
+         <select name="parameters" id="covid-parameters">
+            <option class="parameter" value="TotalConfirmed">Total Confirmed</option>
+            <option class="parameter" value="TotalDeaths">Total Deaths</option>
+            <option class="parameter" value="TotalRecovered">Total Recovered</option>
+            <option class="parameter" value="NewConfirmed">New Confirmed</option>
+            <option class="parameter" value="NewDeaths">New Deaths</option>
+            <option class="parameter" value="NewRecovered">New Recovered</option>
          </select>
-      </form>
-      <input type="text" class="search-covid" placeholder="Search for a Country">
+      </div>
+      <input type="text" class="search-covid" placeholder="Search country">
       <div class="covid-results"></div>
    </div>
 
@@ -64,18 +63,18 @@
 
       <div class="table">
          <button class="button full-display">
-            <img src="/assets/open-full.png">
+            <img src="/assets/icons/open-full.png">
          </button>
          <div class="toggles">
-            <div class="button-switch">
-               <input type="checkbox" id="switch-orange" class="switch" />
-               <label for="switch-orange" class="lbl-off">Total</label>
-               <label for="switch-orange" class="lbl-on">Last Day</label>
+            <div class="button-switch button-switch-day">
+               <input type="checkbox" id="switch-orange-day" class="switch-day switch" />
+               <label for="switch-orange-day" class="lbl-off">Total</label>
+               <label for="switch-orange-day" class="lbl-on">Last Day</label>
             </div>
-            <div class="button-switch2">
-               <input type="checkbox" id="switch-orange2" class="switch2 switch" />
-               <label for="switch-orange2" class="lbl-off">Absolute</label>
-               <label for="switch-orange2" class="lbl-on">/ 100.000 people</label>
+            <div class="button-switch-people button-switch">
+               <input type="checkbox" id="switch-orange-people" class="switch-people switch" />
+               <label for="switch-orange-people" class="lbl-off">Absolute</label>
+               <label for="switch-orange-people" class="lbl-on">/ 100.000 people</label>
             </div>
          </div>
 
@@ -141,7 +140,7 @@
             <button data-key="189" class="keyboard__key letter">-</button>
             <button data-key="187" class="keyboard__key letter">=</button>
             <button data-key="8" class="keyboard__key keyboard__key--wide backspace">
-               <img src="/assets/backspace.png">
+               <img src="/assets/icons/backspace.png">
             </button>
          </div>
 
@@ -162,7 +161,7 @@
          </div>
          <div class="row3">
             <button data-key="20" class="keyboard__key keyboard__key--wide keyboard__key--activatable caps">
-               <img src="/assets/keyboard_capslock.png">
+               <img src="/assets/icons/keyboard_capslock.png">
             </button>
             <button data-key="65" class="keyboard__key letter">a</button>
             <button data-key="83" class="keyboard__key letter">s</button>
@@ -176,12 +175,12 @@
             <button data-key="186" class="keyboard__key letter">;</button>
             <button data-key="222" class="keyboard__key letter">'</button>
             <button data-key="13" class="keyboard__key keyboard__key--wide enter">
-               <img src="/assets/keyboard_return.png">
+               <img src="/assets/icons/keyboard_return.png">
             </button>
          </div>
          <div class="row4">
             <button data-key="16" class="keyboard__key keyboard__key--wide keyboard__key--activatable shift">
-               <img src="/assets/arrow_circle_up.png" width="30px" height="30px">
+               <img src="/assets/icons/arrow_circle_up.png" width="30px" height="30px">
             </button>
             <button data-key="90" class="keyboard__key letter">z</button>
             <button data-key="88" class="keyboard__key letter">x</button>
@@ -197,30 +196,28 @@
 
          <div class="row5">
             <button data-key="65" class="keyboard__key keyboard__key--dark keyboard__key--wide done">
-               <img src="/assets/done_all.png">
+               <img src="/assets/icons/done_all.png">
+            </button>
+            
+            <button data-key="32" class="keyboard__key keyboard__key--extra-wide space">
+               <img src="/assets/icons/space_bar.png">
             </button>
             <button data-key="65" class="keyboard__key volume">
-               <img src="/assets/volume_off.png">
-            </button>
-            <button data-key="32" class="keyboard__key keyboard__key--extra-wide space">
-               <img src="/assets/space_bar.png">
-            </button>
-            <button data-key="65" class="keyboard__key micro">
-               <img src="/assets/mic_off.png">
+               <img src="/assets/icons/volume_off.png">
             </button>
          </div>
 
       </div>
-
    </div>
 
 
    <!-- КЛАВИАТУРА КОНЕЦ-->
 
-   
-   <script src="main.js"> </script>
-   <scriptsssss src="keyboard.js"> </scriptsssss>
-
+   <script src="./src/htmlSelectors.js"> </script>
+   <script src="./src/table.js"> </script>
+   <script src="./src/list.js"> </script>
+   <script src="./src/keyboard.js"> </script>
+   <script src="./src/chart.js"> </script>
 </body>
 
 </html>
