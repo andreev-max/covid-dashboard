@@ -1,34 +1,33 @@
 /*
-import chart.js from chart.js;
-const ctx = document.getElementById('myChart').getContext('2d');
-const chart = new Chart(ctx, {
-  type: 'line',
-  data: {
-    labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
-    datasets: [
-      {
-        label: 'My first dataset',
-        data: [12, 19, 3, 5, 2, 3],
-        backgroundColor: [
-          'rgba(255, 99, 132, 0.2)',
-          'rgba(54, 162, 235, 0.2)',
-          'rgba(255, 206, 86, 0.2)',
-          'rgba(75, 192, 192, 0.2)',
-          'rgba(153, 102, 255, 0.2)',
-          'rgba(255, 159, 64, 0.2)',
-        ],
-        borderColor: [
-          'rgba(255, 99, 132, 1)',
-          'rgba(54, 162, 235, 1)',
-          'rgba(255, 206, 86, 1)',
-          'rgba(75, 192, 192, 1)',
-          'rgba(153, 102, 255, 1)',
-          'rgba(255, 159, 64, 1)',
-        ],
-        borderWidth: 1,
-      },
-    ],
-  },
-  options: {},
-});
+import 'regenerator-runtime/runtime';
+import { fetchByCountry, covidByCountries } from './htmlSelectors';
+// import chart.js from chart.js;
+
+// eslint-disable-next-line import/prefer-default-export
+export const drawChart = async () => {
+  let keys = [];
+  let values = [];
+  await fetchByCountry();
+  keys = covidByCountries.data.map((elem) => elem.Date.slice(0, 10));
+  values = covidByCountries.data.map((elem) => elem.Confirmed);
+  // console.log(covidByCountries);
+  console.log(keys);
+  // console.log(values);
+  const ctx = document.getElementById('myChart').getContext('2d');
+  const chart = new Chart(ctx, {
+    type: 'bar',
+    data: {
+      labels: keys,
+      datasets: [
+        {
+          label: 'Belarus',
+          data: values,
+          backgroundColor: 'red',
+          borderColor: 'black',
+        },
+      ],
+    },
+    options: {},
+  });
+};
 */

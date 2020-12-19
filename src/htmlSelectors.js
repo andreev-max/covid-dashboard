@@ -42,6 +42,7 @@ export const error = null;
 export const searchCovid = '';
 export const countries = { data: null, isLoaded: false };
 export const covidInfo = { data: null, isLoaded: false };
+export const covidByCountries = { data: null, isLoaded: false };
 export const covidCountries = [];
 const changerDay = getByClassName(selectorObject.classNames.changerDay);
 const changerPeople = getByClassName(selectorObject.classNames.changerPeople);
@@ -56,13 +57,39 @@ export const fetchCovidValue = async () => {
   covidInfo.isLoaded = true;
 };
 
-// апишка для получения флагов
+// апишка для получения флагов и населения
 export const fetchCountries = async () => {
   const res = await fetch(
     'https://restcountries.eu/rest/v2/all?fields=alpha2Code;population;flag',
   );
   countries.data = await res.json();
   countries.isLoaded = true;
+};
+
+export const drawChart = async (country) => {
+  const res = await fetch(`https://api.covid19api.com/total/country/${country}`);
+  covidByCountries.data = await res.json();
+  let keys = [];
+  let values = [];
+  keys = covidByCountries.data.map((elem) => elem.Date.slice(0, 10));
+  values = covidByCountries.data.map((elem) => elem.Confirmed);
+  // console.log(values);
+  const ctx = document.getElementById('myChart').getContext('2d');
+  const chart = new Chart(ctx, {
+    type: 'bar',
+    data: {
+      labels: keys,
+      datasets: [
+        {
+          label: country,
+          data: values,
+          backgroundColor: 'red',
+          borderColor: 'black',
+        },
+      ],
+    },
+    options: {},
+  });
 };
 
 // функция для отображения данных в таблице в  зависимости от страны
