@@ -9,6 +9,7 @@ import {
   covidInfo,
   calculationPeople,
   table,
+  drawChart,
 } from './htmlSelectors';
 
 const display = getByClassName(selectorObject.classNames.display);
@@ -87,7 +88,10 @@ export const showList = async (parameter, check) => {
         );
         countryPopulation.textContent = population;
         territory.textContent = displayedCountry.Country;
+        console.log(displayedCountry);
+        console.log(displayedCountry.Country);
         table(displayedCountry, population);
+        drawChart(displayedCountry.Country);
       });
 
       ul.appendChild(li);
@@ -116,3 +120,5 @@ changerOption.addEventListener('click', () => {
   changerOption.checked = !changerOption.checked;
   showList(selectedOptionPopulation, changerOption.checked);
 });
+
+drawChart('Canada');

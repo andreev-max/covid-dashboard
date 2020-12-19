@@ -151,11 +151,10 @@ body {
    flex-direction: column;
    justify-content: space-between;
    align-items: center;
-   width: 50%;
+   width: 600px;
 }
 
 .table {
-   align-self: flex-end;
    position: relative;
    display: flex;
    flex-direction: column;
@@ -163,7 +162,7 @@ body {
    align-items: center;
    justify-content: space-between;
    width: 200px;
-   height: 50%;
+   height: 370px;
    background-color: #272727;
    padding: 40px 5px 5px 5px;
 }
@@ -233,10 +232,10 @@ body {
 
 .chart {
    background-color: rgb(241, 199, 168);
-   height: 25%;
-   width: 100%;
+   height: 350px;
+   width: 600px;
    padding: 10px;
-   
+   align-self: flex-end;
 }
 
 
