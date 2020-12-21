@@ -43,6 +43,7 @@ export const searchCovid = '';
 export const countries = { data: null, isLoaded: false };
 export const covidInfo = { data: null, isLoaded: false };
 export const covidByCountries = { data: null, isLoaded: false };
+const totalValue = { data: null, isLoaded: false };
 export const covidCountries = [];
 const changerDay = getByClassName(selectorObject.classNames.changerDay);
 const changerPeople = getByClassName(selectorObject.classNames.changerPeople);
@@ -65,15 +66,53 @@ export const fetchCountries = async () => {
   countries.data = await res.json();
   countries.isLoaded = true;
 };
-
-export const drawChart = async (country) => {
+/*
+const fetchTotal = async () => {
+  const res = await fetch('https://api.covid19api.com/all');
+  totalValue.data = await res.json();
+  totalValue.isLoaded = true;
+  console.log(totalValue.data);
+};
+fetchTotal();
+*/
+export const drawChart = async (country, parameter, byDay, check, pop) => {
   const res = await fetch(`https://api.covid19api.com/total/country/${country}`);
   covidByCountries.data = await res.json();
-  let keys = [];
-  let values = [];
-  keys = covidByCountries.data.map((elem) => elem.Date.slice(0, 10));
-  values = covidByCountries.data.map((elem) => elem.Confirmed);
-  // console.log(values);
+  let result = [];
+  const keys = covidByCountries.data.map((elem) => elem.Date.slice(0, 10));
+  const values = covidByCountries.data.map((elem) => elem[parameter]);
+  if (byDay) {
+    if (check) {
+      const test = values.map((elem, i, arr) => {
+        if (i === 0) {
+          return elem;
+        }
+        return elem - arr[i - 1];
+      });
+      console.log(test[test.length - 1]);
+      result = test.map((elem) => (Math.ceil(elem * 100000 / pop)));
+      console.log(result[result.length - 1]);
+    } else {
+      result = values.map((elem, i, arr) => {
+        if (i === 0) {
+          return elem;
+        }
+        return elem - arr[i - 1];
+      });
+
+      console.log(result[result.length - 1]);
+    }
+  } else if (check) {
+    console.log(result[result.length - 1]);
+    result = values.map((elem) => (Math.ceil(elem * 100000 / pop)));
+
+    console.log(result[result.length - 1]);
+  } else {
+    result = values;
+
+    console.log(result[result.length - 1]);
+  }
+
   const ctx = document.getElementById('myChart').getContext('2d');
   const chart = new Chart(ctx, {
     type: 'bar',
@@ -81,8 +120,8 @@ export const drawChart = async (country) => {
       labels: keys,
       datasets: [
         {
-          label: country,
-          data: values,
+          label: `${country}, Total ${parameter}`,
+          data: result,
           backgroundColor: 'red',
           borderColor: 'black',
         },

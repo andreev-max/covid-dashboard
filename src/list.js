@@ -17,6 +17,7 @@ const countryPopulation = getByClassName(selectorObject.classNames.countryPopula
 export const changerOption = getByClassName(selectorObject.classNames.changerOption);
 const covidResult = getByClassName(selectorObject.classNames.covidResult);
 const territory = getByClassName(selectorObject.classNames.territory);
+const regexpSearchParam = new RegExp('Confirmed|Deaths|Recovered', '');
 export const select = getById(selectorObject.id.select);
 export const options = [...document.querySelectorAll('option')];
 let selectedOptionPopulation = options[select.selectedIndex].value;
@@ -50,7 +51,6 @@ export const showList = async (parameter, check) => {
     };
   });
   resultArr.sort(sortArrByField(parameter));
-
   const ul = document.createElement('ul');
   ul.classList.add('countries');
   resultArr
@@ -88,10 +88,12 @@ export const showList = async (parameter, check) => {
         );
         countryPopulation.textContent = population;
         territory.textContent = displayedCountry.Country;
-        console.log(displayedCountry);
-        console.log(displayedCountry.Country);
+        const param = parameter.match(regexpSearchParam)[0];
+        let byDay = false;
+        if (parameter.includes('New')) byDay = true;
+          console.log(check)
         table(displayedCountry, population);
-        drawChart(displayedCountry.Country);
+        drawChart(displayedCountry.Country, param, byDay, check, population);
       });
 
       ul.appendChild(li);
@@ -121,4 +123,4 @@ changerOption.addEventListener('click', () => {
   showList(selectedOptionPopulation, changerOption.checked);
 });
 
-drawChart('Canada');
+drawChart('Canada', 'Confirmed', false, false, 500000);
