@@ -88,9 +88,6 @@ export const showList = async (parameter, check) => {
         );
         countryPopulation.textContent = population;
         territory.textContent = displayedCountry.Country;
-        const param = parameter.match(regexpSearchParam)[0];
-        let byDay = false;
-        if (parameter.includes('New')) byDay = true;
         table(displayedCountry, population);
         drawChartCountry(displayedCountry.Country, param, byDay, check, population);
       });
