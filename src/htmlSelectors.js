@@ -43,6 +43,7 @@ export const searchCovid = '';
 export const countries = { data: null, isLoaded: false };
 export const covidInfo = { data: null, isLoaded: false };
 export const covidByCountries = { data: null, isLoaded: false };
+const covidByWorld = { data: null, isLoaded: false };
 const totalValue = { data: null, isLoaded: false };
 export const covidCountries = [];
 const changerDay = getByClassName(selectorObject.classNames.changerDay);
@@ -75,12 +76,16 @@ const fetchTotal = async () => {
 };
 fetchTotal();
 */
-export const drawChart = async (country, parameter, byDay, check, pop) => {
+export const drawChartCountry = async (country, parameter, byDay, check, pop) => {
   const res = await fetch(`https://api.covid19api.com/total/country/${country}`);
   covidByCountries.data = await res.json();
   let result = [];
   const keys = covidByCountries.data.map((elem) => elem.Date.slice(0, 10));
   const values = covidByCountries.data.map((elem) => elem[parameter]);
+  let period = 'Total';
+  let calc = '';
+  if (byDay) period = 'by day';
+  if (check) calc = '/ 100.000 people';
   if (byDay) {
     if (check) {
       const test = values.map((elem, i, arr) => {
@@ -90,7 +95,7 @@ export const drawChart = async (country, parameter, byDay, check, pop) => {
         return elem - arr[i - 1];
       });
       console.log(test[test.length - 1]);
-      result = test.map((elem) => (Math.ceil(elem * 100000 / pop)));
+      result = test.map((elem) => (Math.ceil((elem * 100000) / pop)));
       console.log(result[result.length - 1]);
     } else {
       result = values.map((elem, i, arr) => {
@@ -104,7 +109,7 @@ export const drawChart = async (country, parameter, byDay, check, pop) => {
     }
   } else if (check) {
     console.log(result[result.length - 1]);
-    result = values.map((elem) => (Math.ceil(elem * 100000 / pop)));
+    result = values.map((elem) => (Math.ceil((elem * 100000) / pop)));
 
     console.log(result[result.length - 1]);
   } else {
@@ -120,7 +125,7 @@ export const drawChart = async (country, parameter, byDay, check, pop) => {
       labels: keys,
       datasets: [
         {
-          label: `${country}, Total ${parameter}`,
+          label: `${country}, ${period} ${parameter} ${calc}`,
           data: result,
           backgroundColor: 'red',
           borderColor: 'black',
@@ -130,6 +135,33 @@ export const drawChart = async (country, parameter, byDay, check, pop) => {
     options: {},
   });
 };
+
+const drawChartWorld = async () => {
+  const res = await fetch('https://covid19-api.org/api/timeline');
+  covidByWorld.data = await res.json();
+  console.log(covidByWorld.data);
+  const keys = covidByWorld.data.map((elem) => elem.last_update.slice(0, 10)).reverse();
+  const values = covidByWorld.data.map((elem) => elem.total_cases).reverse();
+  console.log(keys);
+  console.log(values);
+  const ctx = document.getElementById('myChart').getContext('2d');
+  const chart = new Chart(ctx, {
+    type: 'bar',
+    data: {
+      labels: keys,
+      datasets: [
+        {
+          label: 'World',
+          data: values,
+          backgroundColor: 'red',
+          borderColor: 'black',
+        },
+      ],
+    },
+    options: {},
+  });
+};
+drawChartWorld();
 
 // функция для отображения данных в таблице в  зависимости от страны
 export function table(obj, countPeople) {
