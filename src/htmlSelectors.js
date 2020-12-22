@@ -46,6 +46,8 @@ export const covidByCountries = { data: null, isLoaded: false };
 const covidByWorld = { data: null, isLoaded: false };
 const totalValue = { data: null, isLoaded: false };
 export const covidCountries = [];
+export const coordinates = { };
+export const borderCoordinates = { };
 const changerDay = getByClassName(selectorObject.classNames.changerDay);
 const changerPeople = getByClassName(selectorObject.classNames.changerPeople);
 const valueConfirmed = getByClassName(selectorObject.classNames.valueConfirmed);
@@ -195,3 +197,16 @@ export function table(obj, countPeople) {
     )}`;
   }
 }
+
+// апи для получения JSON объекта по долготе и широте
+export const fetchCovidByCoordinates = async () => {
+  const res = await fetch('https://corona.lmao.ninja/v2/countries');
+  coordinates.key = await res.json();
+};
+
+// апи для получения JSON объекта для прорисовки границ
+
+export const fetchDrawingBorders = async () => {
+  const res = await fetch('https://d2ad6b4ur7yvpq.cloudfront.net/naturalearth-3.3.0/ne_110m_admin_0_countries.geojson');
+  borderCoordinates.key = await res.json();
+};

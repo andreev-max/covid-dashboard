@@ -121,4 +121,3 @@ changerOption.addEventListener('click', () => {
   changerOption.checked = !changerOption.checked;
   showList(selectedOptionPopulation, changerOption.checked);
 });
-
