@@ -12,6 +12,9 @@
    <link rel="stylesheet" href="./assets/style/switch.css" />
    <title>COVID</title>
    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.js"></script>
+   <link rel = "stylesheet" href = "http://cdn.leafletjs.com/leaflet-0.7.3/leaflet.css" />
+   <script src = "http://cdn.leafletjs.com/leaflet-0.7.3/leaflet.js"></script>
+   <script src="/lib/leaflet.markercluster.js"></script>
 </head>
 
 <body>
@@ -54,7 +57,13 @@
 
    <!-- СПИСОК КОНЕЦ -->
 
-
+   <!-- КАРТА МИРА СТАРТ -->
+   <div class="container-world-map">
+      <div id="map">
+         <script src="src/map.js"></script>
+      </div>
+   </div>
+   <!-- КАРТА МИРА КОНЕЦ -->
 
 
    <div class="table-chart">
