@@ -1,13 +1,10 @@
-import { selectorObject, getByClassName } from './htmlSelectors';
+import { display, selectedOptionPopulation } from './htmlSelectors';
 import {
-  showList, select, options, changerOption,
+  showList, changerOption,
 } from './list';
 import iconOff from '../assets/icons/volume_off.png';
 import iconOn from '../assets/icons/volume_up.png';
 import music from '../assets/volume/tink.wav';
-
-const display = getByClassName(selectorObject.classNames.display);
-const selectedOptionPopulation = options[select.selectedIndex].value;
 
 const backspace = document.querySelector('.backspace');
 const caps = document.querySelector('.caps');
@@ -58,19 +55,19 @@ done.addEventListener('click', () => {
 
 space.addEventListener('click', () => {
   display.value += ' ';
-  showList(selectedOptionPopulation, changerOption.checked);
+  showList(selectedOptionPopulation.value, changerOption.checked);
 });
 
 enter.addEventListener('click', () => {
   if (properties.sound) playSound();
   display.value += '\n';
-  showList(selectedOptionPopulation, changerOption.checked);
+  showList(selectedOptionPopulation.value, changerOption.checked);
 });
 
 backspace.addEventListener('click', () => {
   if (properties.sound) playSound();
   display.value = display.value.substring(0, display.value.length - 1);
-  showList(selectedOptionPopulation, changerOption.checked);
+  showList(selectedOptionPopulation.value, changerOption.checked);
 });
 
 caps.addEventListener('click', () => {
@@ -112,7 +109,7 @@ letters.forEach((letter) => {
   letter.addEventListener('click', () => {
     if (properties.sound) playSound();
     display.value += letter.textContent;
-    showList(selectedOptionPopulation, changerOption.checked);
+    showList(selectedOptionPopulation.value, changerOption.checked);
   });
 });
 
@@ -125,4 +122,4 @@ volume.addEventListener('click', () => {
   }
 });
 
-showList(selectedOptionPopulation, changerOption.checked);
+showList(selectedOptionPopulation.value, changerOption.checked);

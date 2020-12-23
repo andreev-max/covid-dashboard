@@ -13,6 +13,8 @@ export const selectorObject = {
     countryResult: '.results',
     territory: '.object',
     countryPopulation: '.population-value',
+    boards: '.covid-data',
+    chartContainer: '.chart',
   },
   allClassNames: {
     parameters: '.parameter',
@@ -22,9 +24,6 @@ export const selectorObject = {
     select: 'covid-parameters',
   },
 };
-
-export const allPeopleWorld = 7827000000; // население планеты из википедии
-export const calculationPeople = 100000; // по ТЗ из расчета на 100 тысяч населения
 
 export function getByClassName(className) {
   return document.querySelector(className);
@@ -38,91 +37,230 @@ export function getById(id) {
   return document.getElementById(id);
 }
 
-export const error = null;
-export const searchCovid = '';
-export const countries = { data: null, isLoaded: false };
-export const covidInfo = { data: null, isLoaded: false };
-export const covidByCountries = { data: null, isLoaded: false };
+export const countriesValue = { data: null, isLoaded: false };
+const countriesChart = { data: null, isLoaded: false };
+export const worldValue = { data: null, isLoaded: false };
+const worldValueByDay = { data: null, isLoaded: false };
 export const covidCountries = [];
 export const coordinates = { };
 export const borderCoordinates = { };
-const changerDay = getByClassName(selectorObject.classNames.changerDay);
-const changerPeople = getByClassName(selectorObject.classNames.changerPeople);
+export const calculationPeople = 100000; // по ТЗ из расчета на 100 тысяч населения
+export const regexpSearchChartParameter = new RegExp('cases|deaths|recovered|Cases|Deaths|Recovered', '');
+export const boards = [...getAllByClassName(selectorObject.classNames.boards)];
+export const select = getById(selectorObject.id.select);
+export const options = [...document.querySelectorAll('option')];
+export const selectedOptionPopulation = options[select.selectedIndex];
+export const display = getByClassName(selectorObject.classNames.display);
+export const territory = getByClassName(selectorObject.classNames.territory);
+export const countryPopulation = getByClassName(selectorObject.classNames.countryPopulation);
+export const changerDay = getByClassName(selectorObject.classNames.changerDay);
+export const changerPeople = getByClassName(selectorObject.classNames.changerPeople);
 const valueConfirmed = getByClassName(selectorObject.classNames.valueConfirmed);
 const valueDeaths = getByClassName(selectorObject.classNames.valueDeaths);
 const valueRecovered = getByClassName(selectorObject.classNames.valueRecovered);
+const chartContainer = getByClassName(selectorObject.classNames.chartContainer);
 
-// апишка для получения JSON объекта по ковидным значениям
-export const fetchCovidValue = async () => {
-  const res = await fetch('https://api.covid19api.com/summary');
-  covidInfo.data = await res.json();
-  covidInfo.isLoaded = true;
+export const fetchWorldValueByDay = async () => {
+  // для получения данных по всему миру на каждый день
+  const res = await fetch('https://disease.sh/v3/covid-19/historical/all?lastdays=366');
+  worldValueByDay.data = await res.json();
+  worldValueByDay.isLoaded = true;
 };
 
-// апишка для получения флагов и населения
-export const fetchCountries = async () => {
-  const res = await fetch(
-    'https://restcountries.eu/rest/v2/all?fields=alpha2Code;population;flag',
-  );
-  countries.data = await res.json();
-  countries.isLoaded = true;
+export const fethcWorldValue = async () => {
+  // для получения данных по всему миру на каждый день
+  const res = await fetch('https://disease.sh/v3/covid-19/all');
+  worldValue.data = await res.json();
+  worldValue.isLoaded = true;
 };
 
-export const drawChart = async (country) => {
-  const res = await fetch(`https://api.covid19api.com/total/country/${country}`);
-  covidByCountries.data = await res.json();
-  let keys = [];
-  let values = [];
-  keys = covidByCountries.data.map((elem) => elem.Date.slice(0, 10));
-  values = covidByCountries.data.map((elem) => elem.Confirmed);
-  // console.log(values);
-  const ctx = document.getElementById('myChart').getContext('2d');
-  const chart = new Chart(ctx, {
+export const fethcValueAllCountries = async () => {
+  // для получения всех данных для каждой страны
+  const res = await fetch('https://disease.sh/v3/covid-19/countries');
+  const result = await res.json();
+  countriesValue.data = result.filter((elem) => elem.population > 15
+  && elem.cases > 15
+  && elem.recovered > 15);
+  countriesValue.isLoaded = true;
+};
+
+export const drawChartCountry = async (country, parameter, byDay, check, pop) => {
+  const chartConfigCountry = {
     type: 'bar',
     data: {
-      labels: keys,
+      labels: [],
       datasets: [
         {
-          label: country,
-          data: values,
+          label: '',
+          data: [],
           backgroundColor: 'red',
           borderColor: 'black',
         },
       ],
     },
     options: {},
-  });
+  };
+  console.log(chartConfigCountry.data.datasets[0].data.length);
+  console.log(chartConfigCountry.data.labels.length);
+  // chartConfigCountry.data.datasets[0].data.length = 0;
+  // chartConfigCountry.data.labels.length = 0;
+  // для получения данных на каждый день по любой стране
+  const res = await fetch(`https://disease.sh/v3/covid-19/historical/${country}?lastdays=366`);
+  countriesChart.data = await res.json();
+  countriesChart.isLoaded = true;
+  let resultData = [];
+  const dates = Object.keys(countriesChart.data.timeline.cases);
+  const values = Object.values(countriesChart.data.timeline[parameter]);
+  let period = 'Total';
+  let calc = '';
+  if (byDay) period = 'by day';
+  if (check) calc = '/ 100.000 people';
+  if (byDay) {
+    if (check) {
+      const test = values.map((elem, i, arr) => {
+        if (i === 0) {
+          return elem;
+        }
+        const subtraction = elem - arr[i - 1];
+        if (subtraction > 0) {
+          return subtraction;
+        }
+        return 0;
+      });
+      resultData = test.map((elem) => (Math.ceil((elem * calculationPeople) / pop)));
+    } else {
+      resultData = values.map((elem, i, arr) => {
+        if (i === 0) {
+          return elem;
+        }
+        const subtraction = elem - arr[i - 1];
+        if (subtraction > 0) {
+          return subtraction;
+        }
+        return 0;
+      });
+    }
+  } else if (check) {
+    resultData = values.map((elem) => (Math.ceil((elem * calculationPeople) / pop)));
+  } else {
+    resultData = values;
+  }
+  chartConfigCountry.data.datasets[0].data = [...resultData];
+  chartConfigCountry.data.labels = [...dates];
+  chartConfigCountry.data.datasets[0].label = `${country}: ${period} ${parameter} ${calc}`;
+  const ctx = document.getElementById('myChart').getContext('2d');
+  const chart = new Chart(ctx, chartConfigCountry);
 };
+
+export const drawChartWorld = async (parameter, day, people) => {
+  const chartConfigWorld = {
+    type: 'bar',
+    data: {
+      labels: [],
+      datasets: [
+        {
+          label: '',
+          data: [],
+          backgroundColor: 'red',
+          borderColor: 'black',
+        },
+      ],
+    },
+    options: {},
+  };
+  // chartConfigWorld.data.datasets[0].data = [];
+  // chartConfigWorld.data.labels = [];
+  await fetchWorldValueByDay();
+  const dates = Object.keys(worldValueByDay.data.cases);
+  const values = Object.values(worldValueByDay.data[parameter]);
+  let resultData = [];
+  let period = 'Total';
+  let calc = '';
+  if (day === true) period = 'by day';
+  if (people === true) calc = '/ 100.000 people';
+  if (day === true) {
+    if (people === true) {
+      const test = values.map((elem, i, arr) => {
+        if (i === 0) {
+          return elem;
+        }
+        const subtraction = elem - arr[i - 1];
+        if (subtraction <= 0) {
+          return 0;
+        }
+        return subtraction;
+      });
+      resultData = test.map((elem) => (Math.ceil((elem * calculationPeople)
+      / countryPopulation.textContent)));
+    } else {
+      resultData = values.map((elem, i, arr) => {
+        if (i === 0) {
+          return elem;
+        }
+        const subtraction = elem - arr[i - 1];
+        if (subtraction <= 0) {
+          return 0;
+        }
+        return subtraction;
+      });
+    }
+  } else if (people === true) {
+    resultData = values.map((elem) => (Math.ceil((elem * calculationPeople)
+    / countryPopulation.textContent)));
+  } else {
+    resultData = values;
+  }
+  chartConfigWorld.data.datasets[0].data = [...resultData];
+  chartConfigWorld.data.labels = [...dates];
+  chartConfigWorld.data.datasets[0].label = `World: ${period} ${parameter} ${calc}`;
+  const ctx = document.getElementById('myChart').getContext('2d');
+  const chart = new Chart(ctx, chartConfigWorld);
+};
+drawChartWorld('cases', false, false);
+
+for (let i = 0; i < boards.length; i += 1) {
+  const board = boards[i];
+  board.addEventListener('click', () => {
+    const parameterForChart = board.children[0].innerHTML
+      .match(regexpSearchChartParameter)[0].toLowerCase();
+    if (territory.textContent === 'World') {
+      drawChartWorld(parameterForChart, changerDay.checked, changerPeople.checked);
+    } else {
+      drawChartCountry(territory.textContent, parameterForChart,
+        changerDay.checked, changerPeople.checked, countryPopulation.textContent);
+    }
+  });
+}
 
 // функция для отображения данных в таблице в  зависимости от страны
 export function table(obj, countPeople) {
   if (!changerDay.checked && !changerPeople.checked) {
-    valueConfirmed.textContent = `${obj.TotalConfirmed}`;
-    valueDeaths.textContent = `${obj.TotalDeaths}`;
-    valueRecovered.textContent = `${obj.TotalRecovered}`;
+    valueConfirmed.textContent = `${obj.cases}`;
+    valueDeaths.textContent = `${obj.deaths}`;
+    valueRecovered.textContent = `${obj.recovered}`;
   } else if (changerDay.checked && !changerPeople.checked) {
-    valueConfirmed.textContent = `${obj.NewConfirmed}`;
-    valueDeaths.textContent = `${obj.NewDeaths}`;
-    valueRecovered.textContent = `${obj.NewRecovered}`;
+    valueConfirmed.textContent = `${obj.todayCases}`;
+    valueDeaths.textContent = `${obj.todayDeaths}`;
+    valueRecovered.textContent = `${obj.todayRecovered}`;
   } else if (!changerDay.checked && changerPeople.checked) {
     valueConfirmed.textContent = `${Math.ceil(
-      (obj.TotalConfirmed * calculationPeople) / countPeople,
-    )}`; // делаю не Math.round потому что если отображать данные для страны
+      (obj.cases * calculationPeople) / countPeople,
+    )}`;
     valueDeaths.textContent = `${Math.ceil(
-      (obj.TotalDeaths * calculationPeople) / countPeople,
-    )}`; // за последний день и на 100 тысяч населения то будет ноль
+      (obj.deaths * calculationPeople) / countPeople,
+    )}`;
     valueRecovered.textContent = `${Math.ceil(
-      (obj.TotalRecovered * calculationPeople) / countPeople,
-    )}`; // как-то некорректно)) поэтому пусть лучше будет 1
+      (obj.recovered * calculationPeople) / countPeople,
+    )}`;
   } else {
     valueConfirmed.textContent = `${Math.ceil(
-      (obj.NewConfirmed * calculationPeople) / countPeople,
+      (obj.todayCases * calculationPeople) / countPeople,
     )}`;
     valueDeaths.textContent = `${Math.ceil(
-      (obj.NewDeaths * calculationPeople) / countPeople,
+      (obj.todayDeaths * calculationPeople) / countPeople,
     )}`;
     valueRecovered.textContent = `${Math.ceil(
-      (obj.NewRecovered * calculationPeople) / countPeople,
+      (obj.todayRecovered * calculationPeople) / countPeople,
     )}`;
   }
 }
