@@ -22,8 +22,6 @@ import drawChart from './chart';
 
 // функция для отображения списка стран
 export default async function showList(parameter, check) {
-  console.log({ parameter });
-  console.log({ check });
   covidResult.innerHTML = '';
   if (countriesValue.isLoaded === false) {
     await fetchValueAllCountries();
