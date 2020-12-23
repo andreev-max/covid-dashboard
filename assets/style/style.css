@@ -255,7 +255,7 @@ body {
    height: 450px;
    position: relative;
    background: pink;
-   display: none;
+   display: flex;
    justify-content: center;
 }
 #map{
