@@ -14,7 +14,6 @@
    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.js"></script>
    <link rel = "stylesheet" href = "http://cdn.leafletjs.com/leaflet-0.7.3/leaflet.css" />
    <script src = "http://cdn.leafletjs.com/leaflet-0.7.3/leaflet.js"></script>
-   <script src="/lib/leaflet.markercluster.js"></script>
 </head>
 
 <body>
@@ -40,12 +39,12 @@
             <label for="switch-orange-option" class="lbl-on">/ 100.000</label>
          </div>
          <select name="parameters" id="covid-parameters">
-            <option class="parameter" value="TotalConfirmed">Total Confirmed</option>
-            <option class="parameter" value="TotalDeaths">Total Deaths</option>
-            <option class="parameter" value="TotalRecovered">Total Recovered</option>
-            <option class="parameter" value="NewConfirmed">New Confirmed</option>
-            <option class="parameter" value="NewDeaths">New Deaths</option>
-            <option class="parameter" value="NewRecovered">New Recovered</option>
+            <option class="parameter" value="cases">Total Confirmed</option>
+            <option class="parameter" value="deaths">Total Deaths</option>
+            <option class="parameter" value="recovered">Total Recovered</option>
+            <option class="parameter" value="todayCases">New Confirmed</option>
+            <option class="parameter" value="todayDeaths">New Deaths</option>
+            <option class="parameter" value="todayRecovered">New Recovered</option>
          </select>
       </div>
       <input type="text" class="search-covid" placeholder="Search country">
@@ -88,14 +87,14 @@
          </div>
 
          <div class="title">
-            <h4 class="object">Global</h4>
+            <h4 class="object">World</h4>
             <p class="population-text population">Population: </p>
-            <p class="population-value population">7827000000</p>
+            <p class="population-value population"></p>
          </div>
 
          <div class="covid-values">
             <div class="confirmed covid-data">
-               <p class="text text-confirmed">Confirmed:</p>
+               <p class="text text-confirmed">Cases:</p>
                <p class="covid-value covid-value-confirmed"></p>
             </div>
             <div class="deaths covid-data">
@@ -116,7 +115,7 @@
       <!-- ГРАФИК СТАРТ -->
 
 
-      <div class="chart">
+      <div class="chart-wrapper">
          <canvas id="myChart"></canvas>
       </div>
 
@@ -227,6 +226,7 @@
    <script src="./src/list.js"> </script>
    <script src="./src/keyboard.js"> </script>
    <script src="./src/chart.js"> </script>
+   <script src="./src/map.js"> </script>
 </body>
 
 </html>
