@@ -1,7 +1,5 @@
-import { display, selectedOptionPopulation } from './htmlSelectors';
-import {
-  showList, changerOption,
-} from './list';
+import { display, selectedOptionPopulation, changerOption } from './htmlSelectors';
+import showList from './list';
 import iconOff from '../assets/icons/volume_off.png';
 import iconOn from '../assets/icons/volume_up.png';
 import music from '../assets/volume/tink.wav';
