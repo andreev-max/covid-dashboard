@@ -1,40 +1,32 @@
 import 'regenerator-runtime/runtime';
 import {
-  selectorObject,
-  getByClassName,
-  fethcValueAllCountries,
   countriesValue,
   calculationPeople,
-  table,
-  drawChartCountry,
   countryPopulation,
   territory,
   display,
-  select,
-  options,
-  selectedOptionPopulation,
   regexpSearchChartParameter,
+  covidResult,
 } from './htmlSelectors';
 
-export const changerOption = getByClassName(selectorObject.classNames.changerOption);
-const covidResult = getByClassName(selectorObject.classNames.covidResult);
+import {
+  fetchValueAllCountries,
+} from './fetchFunctions';
 
-// сортировка массива в листе по убыванию в зависимости от выбранного показателя
-function sortArrByField(field) {
-  if (changerOption.checked) {
-    return (a, b) => ((a[field] * calculationPeople) / a.population
-      > (b[field] * calculationPeople) / b.population
-      ? -1
-      : 1);
-  }
-  return (a, b) => (a[field] > b[field] ? -1 : 1);
-}
+import {
+  table,
+  sortArrByField,
+} from './functions';
+
+import drawChart from './chart';
 
 // функция для отображения списка стран
-export const showList = async (parameter, check) => {
+export default async function showList(parameter, check) {
+  console.log({ parameter });
+  console.log({ check });
   covidResult.innerHTML = '';
   if (countriesValue.isLoaded === false) {
-    await fethcValueAllCountries();
+    await fetchValueAllCountries();
   }
   if (!countriesValue.data) return;
   countriesValue.data.sort(sortArrByField(parameter));
@@ -72,10 +64,10 @@ export const showList = async (parameter, check) => {
         let byDay = false;
         if (parameter.includes('today')) byDay = true;
         const chartParameter = parameter.match(regexpSearchChartParameter)[0].toLowerCase();
+        const population = Number(country.population);
         table(country, country.population);
-        drawChartCountry(country.country, chartParameter, byDay, check, country.population);
+        drawChart(country.country, chartParameter, byDay, check, population);
       });
-
       ul.appendChild(li);
       li.appendChild(countryInfo);
       li.appendChild(countryName);
@@ -83,23 +75,4 @@ export const showList = async (parameter, check) => {
       countryInfo.appendChild(countryValue);
     });
   covidResult.appendChild(ul);
-};
-
-select.addEventListener('change', () => {
-  covidResult.innerHTML = '';
-  selectedOptionPopulation.value = options[select.selectedIndex].value;
-  showList(selectedOptionPopulation.value, changerOption.checked);
-});
-
-// поисковик в списке
-display.addEventListener('input', (e) => {
-  display.value = e.target.value;
-  showList(selectedOptionPopulation.value, changerOption.checked);
-});
-
-changerOption.addEventListener('click', () => {
-  covidResult.innerHTML = '';
-  changerOption.checked = !changerOption.checked;
-  showList(selectedOptionPopulation.value, changerOption.checked);
-});
-
+}
