@@ -2,9 +2,11 @@ import 'regenerator-runtime/runtime';
 
 import {
   coordinates,
-  fetchCovidByCoordinates,
 } from './htmlSelectors';
 
+import {
+  fetchCovidByCoordinates,
+} from './fetchFunctions';
 // создание опций
 const mapOptions = {
   center: [20, 25],

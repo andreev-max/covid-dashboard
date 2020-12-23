@@ -1,27 +1,25 @@
 import 'regenerator-runtime/runtime';
+
 import {
-  selectorObject,
-  getAllByClassName,
-  boards,
-  fethcWorldValue,
-  fethcValueAllCountries,
   worldValue,
   countriesValue,
-  table,
-  changerDay,
-  changerPeople,
   countryPopulation,
   territory,
-  regexpSearchChartParameter,
-  drawChartWorld,
-  drawChartCountry,
 } from './htmlSelectors';
 
+import {
+  fetchWorldValue,
+  fetchValueAllCountries,
+} from './fetchFunctions';
+
+import {
+  table,
+} from './functions';
 
 // функция для показа значений для всего мира изначально при запуске страницы
-const showTable = async () => {
+export default async function showTable() {
   if (worldValue.isLoaded === false || countriesValue.isLoaded === false) {
-    await Promise.all([fethcWorldValue(), fethcValueAllCountries()]);
+    await Promise.all([fetchWorldValue(), fetchValueAllCountries()]);
   }
   if (territory.textContent === 'World') {
     countryPopulation.textContent = worldValue.data.population;
@@ -32,31 +30,4 @@ const showTable = async () => {
     );
     table(countryFromList, countryPopulation.textContent);
   }
-};
-
-showTable();
-
-// toggle.checked ? за последний день : за всё время
-changerDay.addEventListener('click', () => {
-  showTable();
-});
-
-// на 100.000 тысяч людей или на всё население страны
-changerPeople.addEventListener('click', () => {
-  showTable();
-});
-
-for (let i = 0; i < boards.length; i += 1) {
-  const board = boards[i];
-  board.addEventListener('click', () => {
-    const parameterForChart = board.children[0].innerHTML
-      .match(regexpSearchChartParameter)[0].toLowerCase();
-    if (territory.textContent === 'World') {
-      drawChartWorld(parameterForChart, changerDay.checked, changerPeople.checked);
-    } else {
-      drawChartCountry(territory.textContent, parameterForChart,
-        changerDay.checked, changerPeople.checked, countryPopulation.textContent);
-    }
-  });
-};
-drawChartWorld('cases', false, false);
+}
