@@ -5,7 +5,7 @@ import {
   fetchCovidByCoordinates,
 } from './htmlSelectors';
 
-//создание опций
+// создание опций
 const mapOptions = {
   center: [20, 25],
   zoom: 1,
@@ -13,16 +13,16 @@ const mapOptions = {
 };
 
 // создание карты с определенными опциями
-const map = new L.map('map', mapOptions);
+const map = new L.Map('map', mapOptions);
 
 // добавление одного слоя карты
 const layerOneMap = L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/Ocean_Basemap/MapServer/tile/{z}/{y}/{x}', {
   attribution: 'Tiles &copy; Esri &mdash; Sources: GEBCO, NOAA, CHS, OSU, UNH, CSUMB, National Geographic, DeLorme, NAVTEQ, and Esri',
 }).addTo(map);
 
-//добавление другого слоя карты
+// добавление другого слоя карты
 const layerTwoMap = L.tileLayer('https://basemap.nationalmap.gov/arcgis/rest/services/USGSImageryTopo/MapServer/tile/{z}/{y}/{x}', {
-	attribution: 'Tiles courtesy of the <a href="https://usgs.gov/">U.S. Geological Survey</a>'
+  attribution: 'Tiles courtesy of the <a href="https://usgs.gov/">U.S. Geological Survey</a>',
 }).addTo(map);
 
 const Maps = {
@@ -32,7 +32,7 @@ const Maps = {
 
 L.control.layers(Maps, {}).addTo(map);
 
-//функция для отображения интенсивности заражения вирусом
+// функция для отображения интенсивности заражения вирусом
 async function main() {
   await fetchCovidByCoordinates();
   coordinates.key.forEach((element) => {
@@ -72,7 +72,7 @@ async function main() {
       });
       circle.bindPopup(`Name country:${element.country}<br>Population:${element.population}<br>Cases:${element.cases}<br>Deaths:${element.deaths}`);
       circle.addTo(map);
-    } else if(element.cases > 50000) {
+    } else if (element.cases > 50000) {
       const circle = new L.CircleMarker([element.countryInfo.lat, element.countryInfo.long], {
         color: 'pink',
         fillColor: 'pink',
@@ -81,7 +81,7 @@ async function main() {
       });
       circle.bindPopup(`Name country:${element.country}<br>Population:${element.population}<br>Cases:${element.cases}<br>Deaths:${element.deaths}`);
       circle.addTo(map);
-    } else if(element.cases > 25000) {
+    } else if (element.cases > 25000) {
       const circle = new L.CircleMarker([element.countryInfo.lat, element.countryInfo.long], {
         color: 'green',
         fillColor: 'green',
@@ -103,4 +103,4 @@ async function main() {
   });
 }
 
-main()
+main();
