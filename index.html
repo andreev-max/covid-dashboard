@@ -23,16 +23,15 @@
 
 
    <div class="countries-list">
-      <button class="button full-display">
-         <img src="/assets/icons/open-full.png">
-      </button>
-      <button class="button keyboard-button-display">
-         <img src="/assets/icons/keyboard.png">
-      </button>
+      <div class="title title-list">
+         <p2 class="subtitle subtitle-list">LIST OF COUNTRIES</p2>
+         <button class="button button-full-list">
+            <img src="/assets/icons/fullscreen.png">
+         </button>
+   </div>
 
-
-
-      <div class="instead-form">
+      <div class="main-list">
+         <div class="instead-form">
          <div class="button-switch button-switch-option">
             <input type="checkbox" id="switch-orange-option" class="switch-option switch" />
             <label for="switch-orange-option" class="lbl-off">Absolute</label>
@@ -47,13 +46,25 @@
             <option class="parameter" value="todayRecovered">New Recovered</option>
          </select>
       </div>
-      <input type="text" class="search-covid" placeholder="Search country">
+      <div class="search-button">
+         <input type="text" class="search-covid" placeholder="Search country">
+      <button class="button keyboard-button-display">
+         <img src="/assets/icons/keyboard.png">
+      </button>
+      </div>
+      
       <div class="covid-results"></div>
    </div>
+      </div>
+      
 
 
 
 
+
+<div class="everything-else">
+
+   
    <!-- СПИСОК КОНЕЦ -->
 
    <!-- КАРТА МИРА СТАРТ -->
@@ -65,14 +76,19 @@
    <!-- КАРТА МИРА КОНЕЦ -->
 
 
+
    <div class="table-chart">
 
       <!-- ТАБЛИЦА СТАРТ -->
 
       <div class="table">
-         <button class="button full-display">
-            <img src="/assets/icons/open-full.png">
-         </button>
+         <div class="title title-table">
+            <h2 class="subtitle subtitle-list">TABLE</h2>
+            <button class="button button-full-table">
+               <img src="/assets/icons/fullscreen.png">
+            </button>
+      </div>
+      <div class="main-table">
          <div class="toggles">
             <div class="button-switch button-switch-day">
                <input type="checkbox" id="switch-orange-day" class="switch-day switch" />
@@ -86,7 +102,8 @@
             </div>
          </div>
 
-         <div class="title">
+
+         <div class="title-territory">
             <h4 class="object">World</h4>
             <p class="population-text population">Population: </p>
             <p class="population-value population"></p>
@@ -106,22 +123,27 @@
                <p class="covid-value covid-value-recovered"></p>
             </div>
          </div>
-
       </div>
-
+      </div>
 
       <!-- ТАБЛИЦА КОНЕЦ -->
 
       <!-- ГРАФИК СТАРТ -->
 
-
-      <div class="chart-wrapper">
-         <canvas id="myChart"></canvas>
+      
+         <div class="chart-wrapper">
+         <canvas id="myChart" class="chart"></canvas>
       </div>
+      
+      
 
 
       <!-- ГРАФИК КОНЕЦ -->
    </div>
+</div>
+
+
+
 
 
 
