@@ -12,6 +12,7 @@ export const selectorObject = {
     territory: '.object',
     countryPopulation: '.population-value',
     boards: '.covid-data',
+    chartContainer: '.chart-wrapper',
   },
   allClassNames: {
     parameters: '.parameter',
@@ -44,6 +45,7 @@ export const borderCoordinates = { };
 export const calculationPeople = 100000; // по ТЗ из расчета на 100 тысяч населения
 export const regexpSearchChartParameter = new RegExp('cases|deaths|recovered|Cases|Deaths|Recovered', '');
 export const boards = [...getAllByClassName(selectorObject.classNames.boards)];
+export const chartContainer = getByClassName(selectorObject.classNames.chartContainer);
 export const select = getById(selectorObject.id.select);
 export const options = [...document.querySelectorAll('option')];
 export const selectedOptionPopulation = options[select.selectedIndex];
