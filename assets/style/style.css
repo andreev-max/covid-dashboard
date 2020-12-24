@@ -279,6 +279,7 @@ body {
 
 
 .chart-wrapper {
+   padding: 30px 10px 10px 0px;
    display: flex;
    align-items: center;
    width: 60%;
