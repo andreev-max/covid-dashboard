@@ -1,14 +1,27 @@
+/* eslint-disable no-use-before-define */
 import 'regenerator-runtime/runtime';
 import {
   calculationPeople,
-  countryPopulation,
   countriesChart,
   worldValueByDay,
+  chartContainer,
 } from './htmlSelectors';
 import {
   fetchWorldValueByDay,
   fetchChartCountry,
 } from './fetchFunctions';
+
+function addData(chart, label, data) {
+  chart.data.labels.push(label);
+  chart.data.datasets[0].data.push(data);
+  chart.update();
+}
+
+function removeData(chart) {
+  chart.data.labels.pop();
+  chart.data.datasets[0].data.pop();
+  chart.update();
+}
 
 export default async function drawChart(country, parameter, byDay, check, pop) {
   let resultData = [];
@@ -23,21 +36,6 @@ export default async function drawChart(country, parameter, byDay, check, pop) {
     dates = Object.keys(countriesChart.data.timeline.cases);
     values = Object.values(countriesChart.data.timeline[parameter]);
   }
-  const chartConfig = {
-    type: 'bar',
-    data: {
-      labels: [],
-      datasets: [
-        {
-          label: '',
-          data: [],
-          backgroundColor: 'red',
-          borderColor: 'black',
-        },
-      ],
-    },
-    options: {},
-  };
   let period = 'Total';
   let calc = '';
   if (byDay) period = 'by day';
@@ -72,9 +70,31 @@ export default async function drawChart(country, parameter, byDay, check, pop) {
   } else {
     resultData = values;
   }
-  chartConfig.data.datasets[0].data = [...resultData];
-  chartConfig.data.labels = [...dates];
-  chartConfig.data.datasets[0].label = `${country}: ${period} ${parameter} ${calc}`;
+  while (chartContainer.firstChild) {
+    chartContainer.removeChild(chartContainer.firstChild);
+  }
+  chartContainer.innerHTML = '<canvas id="myChart" class="chart"></canvas>';
   const ctx = document.getElementById('myChart').getContext('2d');
-  const chart = new Chart(ctx, chartConfig);
+  Chart.defaults.global.defaultFontColor = 'wheat';
+  const chartCovid = new Chart(ctx, {
+    type: 'bar',
+    data: {
+      labels: [...dates],
+      datasets: [
+        {
+          label: `${country}: ${period} ${parameter} ${calc}`,
+          data: [...resultData],
+          backgroundColor: 'red',
+          borderColor: 'black',
+        },
+      ],
+    },
+    options: {
+      legend: {
+        labels: {
+          fontColor: 'wheat',
+        },
+      },
+    },
+  });
 }
