@@ -1,4 +1,5 @@
 import 'regenerator-runtime/runtime';
+import L from 'leaflet';
 
 import {
   coordinates,

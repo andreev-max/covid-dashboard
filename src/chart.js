@@ -1,5 +1,7 @@
 /* eslint-disable no-use-before-define */
 import 'regenerator-runtime/runtime';
+import Chart from 'chart.js';
+
 import {
   calculationPeople,
   countriesChart,
@@ -10,18 +12,6 @@ import {
   fetchWorldValueByDay,
   fetchChartCountry,
 } from './fetchFunctions';
-
-function addData(chart, label, data) {
-  chart.data.labels.push(label);
-  chart.data.datasets[0].data.push(data);
-  chart.update();
-}
-
-function removeData(chart) {
-  chart.data.labels.pop();
-  chart.data.datasets[0].data.pop();
-  chart.update();
-}
 
 export default async function drawChart(country, parameter, byDay, check, pop) {
   let resultData = [];
