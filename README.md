@@ -8,6 +8,6 @@
 Task: ***https://github.com/rolling-scopes-school/tasks/blob/master/tasks/covid-dashboard.md***
 
 
-Score: 123 / 170
+Score: 212 / 240
 
 ## Old deploy: ***https://nazdac-old-covid-dashboard.netlify.app/***
